@@ -130,8 +130,8 @@ class Yapra::Base
     plugin                  = Yapra::Inflector.constantize("#{command['module']}").new
     plugin.yapra            = self if plugin.respond_to?('yapra=')
     plugin.pipeline_context = pipeline_context if plugin.respond_to?('pipeline_context=')
-    plugin.yapra_config     = command['config'] if plugin.respond_to?('yapra_config=')
-    plugin.execute(data)
+    plugin.plugin_config    = command['config'] if plugin.respond_to?('plugin_config=')
+    plugin.run(data)
   end
   
   def run_legacy_plugin command, data

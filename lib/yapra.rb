@@ -23,5 +23,5 @@
 #++
 module Yapra
 end
-
+require 'rubygems'
 require 'yapra/base'
