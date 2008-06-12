@@ -24,43 +24,43 @@
 # === Format 2: Python habu like.
 # You can run a lot of pipelines with global config.
 #
-#    - global:
-#        log:
-#          out: stderr
-#          level: warn
+#   global:
+#     log:
+#       out: stderr
+#       level: warn
 #
-#    - pipeline:
-#        pipeline1:
-#          - module: Module:name
-#            config:
-#              a: 3
-#          - module: Module:name2
-#            config:
-#              a: b
+#   pipeline:
+#     pipeline1:
+#       - module: Module:name
+#         config:
+#           a: 3
+#       - module: Module:name2
+#         config:
+#           a: b
 #
-#        pipeline2:
-#          - module: Module:name
-#            config:
-#              a: 3
-#          - module: Module:name2
-#            config:
-#              a: b
+#     pipeline2:
+#       - module: Module:name
+#         config:
+#           a: 3
+#       - module: Module:name2
+#         config:
+#           a: b
 #
 # === Format 3: Mixed type.
 # You can run sigle pipeline with global config.
 #
-#    - global:
-#        log:
-#          out: stderr
-#          level: warn
+#   global:
+#     log:
+#       out: stderr
+#       level: warn
 #
-#    - pipeline:
-#      - module: Module:name
-#        config:
-#          a: 3
-#      - module: Module:name2
-#        config:
-#          a: b
+#   pipeline:
+#     - module: Module:name
+#       config:
+#         a: 3
+#     - module: Module:name2
+#       config:
+#         a: b
 #
 require 'logger'
 require 'yapra'
@@ -75,7 +75,6 @@ class Yapra::Base
   attr_reader :pipelines
   
   def initialize global_config
-    
     if global_config.kind_of?(Hash)
       @env = global_config['global'] || {}
       if global_config['pipeline']
@@ -126,7 +125,7 @@ class Yapra::Base
   def run_class_based_plugin command, data
     self.logger.debug("run plugin as class based")
     require Yapra::Inflector.underscore(command['module'])
-    plugin              = eval("#{command['module']}.new", TOPLEVEL_BINDING, __FILE__, 13)
+    plugin              = Yapra::Inflector.constantize("#{command['module']}").new
     plugin.yapra        = self if plugin.respond_to?('yapra=')
     plugin.execute(command, data)
   end
@@ -138,17 +137,17 @@ class Yapra::Base
   
   def create_logger
     if env['log'] && env['log']['out']
-      if env['log']['out'].index('file://') > 0
+      if env['log']['out'].index('file://')
         self.logger = Logger.new(URI.parse(env['log']['out']).path)
       else
-        self.logger = Logger.new(eval(env['log']['out'].upcase))
+        self.logger = Logger.new(Yapra::Inflector.constantize(env['log']['out'].upcase))
       end
     else
       self.logger = Logger.new(STDOUT)
     end
     
     if env['log'] && env['log']['level']
-      self.logger.level = eval("Logger::#{config['level'].upcase}")
+      self.logger.level = Yapra::Inflector.constantize("Logger::#{env['log']['level'].upcase}")
     end
   end
 end
