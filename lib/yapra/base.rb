@@ -104,15 +104,16 @@ class Yapra::Base
   def execute_pipeline pipeline_name, data=[]
     self.logger.info("# pipeline '#{pipeline_name}' is started...")
     command_array = self.pipelines[pipeline_name]
+    pipeline_context = { 'pipeline_name' => pipeline_name }
     command_array.inject(data) do |data, command|
-      execute_plugin(command, data.clone)
+      execute_plugin(pipeline_context, command, data.clone)
     end
   end
   
-  def execute_plugin command, data=[]
+  def execute_plugin pipeline_context, command, data=[]
     self.logger.info("exec plugin #{command["module"]}")
     if class_based_plugin?(command['module'])
-      run_class_based_plugin command, data
+      run_class_based_plugin pipeline_context, command, data
     else
       run_legacy_plugin command, data
     end
@@ -123,12 +124,14 @@ class Yapra::Base
     UPPER_CASE =~ command_name.split('::').last[0, 1]
   end
   
-  def run_class_based_plugin command, data
+  def run_class_based_plugin pipeline_context, command, data
     self.logger.debug("evaluate plugin as class based")
     require Yapra::Inflector.underscore(command['module'])
-    plugin              = Yapra::Inflector.constantize("#{command['module']}").new
-    plugin.yapra        = self if plugin.respond_to?('yapra=')
-    plugin.execute(command, data)
+    plugin                  = Yapra::Inflector.constantize("#{command['module']}").new
+    plugin.yapra            = self if plugin.respond_to?('yapra=')
+    plugin.pipeline_context = pipeline_context if plugin.respond_to?('pipeline_context=')
+    plugin.yapra_config     = command['config'] if plugin.respond_to?('yapra_config=')
+    plugin.execute(data)
   end
   
   def run_legacy_plugin command, data
