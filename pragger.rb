@@ -26,4 +26,4 @@ opt.on("-w", "--where") { puts(Pathname.new(__FILE__).parent + "plugin"); exit }
 opt.parse!
 
 yapra = Yapra::Base.new(YAML.load(File.read(config_file).toutf8.gsub(/base64::([\w+\/]+=*)/){ Base64.decode64($1) }))
-yapra.execute([])
+yapra.execute()

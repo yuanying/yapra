@@ -4,7 +4,7 @@
 #
 # == Usage
 #
-#    Yapra::Base.new(config).run(data_array)
+#    Yapra::Base.new(config).execute()
 #
 # == Config Examples
 # 
@@ -95,10 +95,10 @@ class Yapra::Base
     create_logger
   end
   
-  def execute data=[]
+  def execute
     self.pipelines.each do |k, v|
-      self.logger.info("# exec pipeline '#{k}'")
-      execute_plugins v, data
+      self.logger.info("# pipeline '#{k}' is started...")
+      execute_plugins v, []
     end
   end
   
@@ -123,7 +123,7 @@ class Yapra::Base
   end
   
   def run_class_based_plugin command, data
-    self.logger.debug("run plugin as class based")
+    self.logger.debug("evaluate plugin as class based")
     require Yapra::Inflector.underscore(command['module'])
     plugin              = Yapra::Inflector.constantize("#{command['module']}").new
     plugin.yapra        = self if plugin.respond_to?('yapra=')
@@ -131,7 +131,7 @@ class Yapra::Base
   end
   
   def run_legacy_plugin command, data
-    self.logger.debug("run plugin as legacy")
+    self.logger.debug("evaluate plugin as legacy")
     Yapra::LegacyPlugin.new(self, command['module']).run(command['config'], data)
   end
   
