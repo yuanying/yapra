@@ -96,20 +96,21 @@ class Yapra::Base
   end
   
   def execute
-    self.pipelines.each do |k, v|
-      self.logger.info("# pipeline '#{k}' is started...")
-      execute_plugins v, []
+    self.pipelines.each_key do |k|
+      execute_pipeline k, []
     end
   end
   
-  def execute_plugins command_array, data=[]
+  def execute_pipeline pipeline_name, data=[]
+    self.logger.info("# pipeline '#{k}' is started...")
+    command_array = self.pipelines[k]
     command_array.inject(data) do |data, command|
-      self.logger.info("exec plugin #{command["module"]}")
       execute_plugin(command, data.clone)
     end
   end
   
   def execute_plugin command, data=[]
+    self.logger.info("exec plugin #{command["module"]}")
     if class_based_plugin?(command['module'])
       run_class_based_plugin command, data
     else
