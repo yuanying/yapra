@@ -1,3 +1,67 @@
+# Base class of Yet Another Pragger implementation.
+#
+# This is initialized with hashed config string, and run pipeline.
+#
+# == Usage
+#
+#    Yapra::Base.new(config).run(data_array)
+#
+# == Config Examples
+# 
+# === Format 1: Pragger like.
+# A simplest. You can run one pipeline without global config.
+#
+#    - module: Module:name
+#      config:
+#        a: 3
+#    - module: Module:name2
+#      config:
+#        a: b
+#    - module: Module:name3
+#      config:
+#        a: 88
+#
+# === Format 2: Python habu like.
+# You can run a lot of pipelines with global config.
+#
+#    - global:
+#        log:
+#          out: stderr
+#          level: warn
+#
+#    - pipeline:
+#        pipeline1:
+#          - module: Module:name
+#            config:
+#              a: 3
+#          - module: Module:name2
+#            config:
+#              a: b
+#
+#        pipeline2:
+#          - module: Module:name
+#            config:
+#              a: 3
+#          - module: Module:name2
+#            config:
+#              a: b
+#
+# === Format 3: Mixed type.
+# You can run sigle pipeline with global config.
+#
+#    - global:
+#        log:
+#          out: stderr
+#          level: warn
+#
+#    - pipeline:
+#      - module: Module:name
+#        config:
+#          a: 3
+#      - module: Module:name2
+#        config:
+#          a: b
+#
 require 'logger'
 require 'yapra'
 require 'yapra/inflector'
