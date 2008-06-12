@@ -102,8 +102,8 @@ class Yapra::Base
   end
   
   def execute_pipeline pipeline_name, data=[]
-    self.logger.info("# pipeline '#{k}' is started...")
-    command_array = self.pipelines[k]
+    self.logger.info("# pipeline '#{pipeline_name}' is started...")
+    command_array = self.pipelines[pipeline_name]
     command_array.inject(data) do |data, command|
       execute_plugin(command, data.clone)
     end
