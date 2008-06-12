@@ -1,22 +1,30 @@
 require 'logger'
 require 'yapra'
 require 'yapra/inflector'
+require 'yapra/legacy_plugin'
 
 class Yapra::Base
   UPPER_CASE = /[A-Z]/
   
   attr_accessor :logger
   attr_reader :env
-  attr_reader :pipeline
+  attr_reader :pipelines
   
   def initialize global_config
     
     if global_config.kind_of?(Hash)
-      @env      = global_config['global'] || {}
-      @pipeline = global_config['pipeline'] || []
+      @env = global_config['global'] || {}
+      if global_config['pipeline']
+        if global_config['pipeline'].kind_of?(Hash)
+          @pipelines = global_config['pipeline']
+        elsif global_config['pipeline'].kind_of?(Array)
+          @pipelines = { 'default' => global_config['pipeline'] }
+        end
+      end
+      raise 'config["global"]["pipeline"] is invalid!' unless @pipelines
     elsif global_config.kind_of?(Array)
-      @env      = {}
-      @pipeline = global_config
+      @env        = {}
+      @pipelines  = { 'default' => global_config }
     else
       raise 'config file is invalid!'
     end
@@ -25,7 +33,10 @@ class Yapra::Base
   end
   
   def execute data=[]
-    execute_plugins pipeline, data
+    self.pipelines.each do |k, v|
+      self.logger.info("# exec pipeline '#{k}'")
+      execute_plugins v, data
+    end
   end
   
   def execute_plugins command_array, data=[]
@@ -45,18 +56,20 @@ class Yapra::Base
   
   protected
   def class_based_plugin? command_name
-    UPPER_CASE =~ command_name.split('::').first[0, 1]
+    UPPER_CASE =~ command_name.split('::').last[0, 1]
   end
   
   def run_class_based_plugin command, data
-    require Inflector.underscore(command['module'])
+    self.logger.debug("run plugin as class based")
+    require Yapra::Inflector.underscore(command['module'])
     plugin              = eval("#{command['module']}.new", TOPLEVEL_BINDING, __FILE__, 13)
     plugin.yapra        = self if plugin.respond_to?('yapra=')
     plugin.execute(command, data)
   end
   
   def run_legacy_plugin command, data
-    LegacyPlugin.new(yapra, command['module']).run(command['config'], data)
+    self.logger.debug("run plugin as legacy")
+    Yapra::LegacyPlugin.new(self, command['module']).run(command['config'], data)
   end
   
   def create_logger

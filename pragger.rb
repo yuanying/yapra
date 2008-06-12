@@ -19,11 +19,14 @@ require 'yapra'
 config_file = "config.yaml"
 opt = OptionParser.new
 opt.on("-c", "--configfile CONFIGFILE") {|v| config_file = v }
-opt.on("-p", "--plugindir PLUGINDIR") {|v| $: << v }
+opt.on("-p", "--plugindir PLUGINDIR") {|v| $:.insert(0, v) }
 # opt.on("-u", "--pluginusage PLUGINNAME") {|v| $plugins[v].source.gsub(/^## ?(.*)/){ puts $1 }; exit }
 # opt.on("-l", "--listplugin") { $plugins.keys.sort.each{|k| puts k }; exit }
 opt.on("-w", "--where") { puts(Pathname.new(__FILE__).parent + "plugin"); exit }
 opt.parse!
+
+require 'pp'
+pp $:
 
 yapra = Yapra::Base.new(YAML.load(File.read(config_file).toutf8.gsub(/base64::([\w+\/]+=*)/){ Base64.decode64($1) }))
 yapra.execute([])
