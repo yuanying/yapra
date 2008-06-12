@@ -2,7 +2,7 @@
 ##
 ## add WWW::Mechanize agent to context.
 ## 
-## - module: Yapra::Config::MechanizeAgent
+## - module: Config::MechanizeAgent
 ##   config:
 ##     user_agent_alias: Windows IE 6
 ##     proxy:
@@ -14,13 +14,12 @@
 require 'mechanize'
 require 'yapra/plugin/base'
 
-module Yapra::Config
+module Yapra::Plugin::Config
   class MechanizeAgent < Yapra::Plugin::Base
-    Name = 'mechanize_agent'
-    
+
     def run(data)
-      config[Name] ||= WWW::Mechanize.new
-      mechanize_agent = config[Name]
+      pipeline_context['mechanize_agent'] ||= WWW::Mechanize.new
+      mechanize_agent = pipeline_context['mechanize_agent']
       
       mechanize_agent.user_agent_alias = config['user_agent_alias'] || 'Windows IE 6'
       if config['proxy']

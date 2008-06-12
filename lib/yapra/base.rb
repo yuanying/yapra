@@ -126,8 +126,11 @@ class Yapra::Base
   
   def run_class_based_plugin pipeline_context, command, data
     self.logger.debug("evaluate plugin as class based")
-    require Yapra::Inflector.underscore(command['module'])
-    plugin                  = Yapra::Inflector.constantize("#{command['module']}").new
+    yapra_module_name       = "Yapra::Plugin::#{command['module']}"
+    plugin_class            = load_class_constant(yapra_module_name)
+    plugin_class            = load_class_constant(command['module']) unless plugin_class
+    raise LoadError unless plugin_class
+    plugin                  = plugin_class.new
     plugin.yapra            = self if plugin.respond_to?('yapra=')
     plugin.pipeline_context = pipeline_context if plugin.respond_to?('pipeline_context=')
     plugin.plugin_config    = command['config'] if plugin.respond_to?('plugin_config=')
@@ -137,6 +140,15 @@ class Yapra::Base
   def run_legacy_plugin command, data
     self.logger.debug("evaluate plugin as legacy")
     Yapra::LegacyPlugin.new(self, command['module']).run(command['config'], data)
+  end
+  
+  def load_class_constant module_name
+    require Yapra::Inflector.underscore(module_name)
+    Yapra::Inflector.constantize(module_name)
+  rescue LoadError
+    nil
+  rescue NameError
+    nil
   end
   
   def create_logger

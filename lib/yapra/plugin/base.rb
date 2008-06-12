@@ -8,4 +8,7 @@ class Yapra::Plugin::Base
   include Yapra::Plugin::FeedItemOperator
   include Yapra::Plugin::ErbApplier
   
+  def logger
+    self.yapra.logger
+  end
 end
