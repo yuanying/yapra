@@ -16,8 +16,8 @@ class Yapra::Plugin::MechanizeBase < Yapra::Plugin::Base
       end
     end
 
-    if config['apply_template_after_extacted']
-      config['apply_template_after_extacted'].each do |k, template|
+    if config['apply_template_after_extracted']
+      config['apply_template_after_extracted'].each do |k, template|
         value = apply_template template, binding
         set_attribute_to item, k, value
       end
