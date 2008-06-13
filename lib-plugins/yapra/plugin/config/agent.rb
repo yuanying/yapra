@@ -1,4 +1,4 @@
-## Yapra::Config::MechanizeAgent -- Yuanying
+## Yapra::Config::Agent -- Yuanying
 ##
 ## add WWW::Mechanize agent to context.
 ## 
@@ -14,7 +14,7 @@
 require 'yapra/plugin/mechanize_base'
 
 module Yapra::Plugin::Config
-  class MechanizeAgent < Yapra::Plugin::MechanizeBase
+  class Agent < Yapra::Plugin::MechanizeBase
 
     def run(data)
       

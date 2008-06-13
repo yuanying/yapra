@@ -1,4 +1,4 @@
-## Config::MechanizePost -- Yuanying
+## Config::WebPost -- Yuanying
 ##
 ## post to web page with WWW::Mechanize agent.
 ## 
@@ -12,7 +12,7 @@
 require 'yapra/plugin/mechanize_base'
 
 module Yapra::Plugin::Config
-  class MechanizePost < Yapra::Plugin::MechanizeBase
+  class WebPost < Yapra::Plugin::MechanizeBase
     def run(data)
       agent.post(config['url'], config['params'])
       data

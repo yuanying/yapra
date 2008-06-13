@@ -1,4 +1,4 @@
-## Config::MechanizeBasicAuth -- Yuanying
+## Config::BasicAuth -- Yuanying
 ##
 ## post to web page with WWW::Mechanize agent.
 ## 
@@ -10,7 +10,7 @@
 require 'yapra/plugin/mechanize_base'
 
 module Yapra::Plugin::Config
-  class MechanizeBasicAuth < Yapra::Plugin::MechanizeBase
+  class BasicAuth < Yapra::Plugin::MechanizeBase
     def run(data)
       agent.basic_auth(config['user'], config['password'])
       data
