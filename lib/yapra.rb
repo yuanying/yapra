@@ -23,5 +23,8 @@
 #++
 module Yapra
 end
+require 'rss/1.0'
+require 'rss/2.0'
+require 'rss/maker'
 require 'rubygems'
 require 'yapra/base'

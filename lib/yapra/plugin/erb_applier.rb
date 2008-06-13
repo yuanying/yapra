@@ -1,5 +1,6 @@
 require 'yapra/plugin'
 require 'erb'
+require 'uri'
 
 module Yapra::Plugin::ErbApplier
   def apply_template template, apply_binding=binding

@@ -9,7 +9,7 @@ require 'base64'
 YAPRA_ROOT = File.dirname(__FILE__)
 
 $:.insert(0, *[
-  File.join(YAPRA_ROOT, 'plugins'),
+  File.join(YAPRA_ROOT, 'lib-plugins'),
   File.join(YAPRA_ROOT, 'legacy_plugins'),
   File.join(YAPRA_ROOT, 'lib')
 ])
