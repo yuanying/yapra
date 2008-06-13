@@ -75,6 +75,7 @@ class Yapra::Base
   attr_accessor :logger
   attr_reader :env
   attr_reader :pipelines
+  attr_reader :module_name_prefix
   
   def initialize global_config, legacy_plugin_directory_paths
     if global_config.kind_of?(Hash)
@@ -95,6 +96,7 @@ class Yapra::Base
     end
     
     create_logger
+    construct_module_name_prefix
     load_legacy_plugins(legacy_plugin_directory_paths)
   end
   
@@ -129,9 +131,12 @@ class Yapra::Base
   
   def run_class_based_plugin pipeline_context, command, data
     self.logger.debug("evaluate plugin as class based")
-    yapra_module_name       = "Yapra::Plugin::#{command['module']}"
-    plugin_class            = load_class_constant(yapra_module_name)
-    plugin_class            = load_class_constant(command['module']) unless plugin_class
+    plugin_class = nil
+    module_name_prefix.each do |prefix|
+      yapra_module_name = "#{prefix}#{command['module']}"
+      plugin_class      = load_class_constant(yapra_module_name)
+      break if plugin_class
+    end
     raise LoadError unless plugin_class
     plugin                  = plugin_class.new
     plugin.yapra            = self if plugin.respond_to?('yapra=')
@@ -181,6 +186,17 @@ class Yapra::Base
     
     if env['log'] && env['log']['level']
       self.logger.level = Yapra::Inflector.constantize("Logger::#{env['log']['level'].upcase}")
+    end
+  end
+  
+  def construct_module_name_prefix
+    @module_name_prefix = [ 'Yapra::Plugin::', '' ]
+    if env['module_name_prefix']
+      if env['module_name_prefix'].kind_of?(Array)
+        @module_name_prefix = env['module_name_prefix']
+      else
+        @module_name_prefix = [ env['module_name_prefix'] ]
+      end
     end
   end
 end
