@@ -15,7 +15,7 @@
 ##
 require 'yapra/plugin/mechanize_base'
 
-module Yapra::Plugin::Feed
+module Yapra::Plugin::Filter
   class EntryFullText < Yapra::Plugin::MechanizeBase
     def run(data)
       regexp = nil

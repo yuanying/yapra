@@ -155,14 +155,14 @@ class Yapra::Base
   end
   
   def load_legacy_plugins paths
-    legacy_plugins = {}
+    self.legacy_plugins = {}
     paths.each do |folder|
       Pathname.glob(folder + "**/*.rb").sort.each do |file|
+        module_name = file.relative_path_from(folder).to_s.gsub("/","::")[0..-4]
         begin
-          legacy_plugins[ 
-            file.relative_path_from(folder).to_s.gsub("/","::")[0..-4] 
-          ] = Yapra::LegacyPlugin.new(self, file)
-        rescue LoadError
+          legacy_plugins[ module_name ] = Yapra::LegacyPlugin.new(self, file)
+        rescue LoadError => ex
+          logger.warn "#{module_name} can't load, because: #{ex.message}"
         end
       end
     end

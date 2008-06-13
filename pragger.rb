@@ -14,8 +14,8 @@ $:.insert(0, *[
 ])
 
 legacy_plugin_directory_paths = [
-  File.join(YAPRA_ROOT, 'legacy_plugins'),
-  File.join(YAPRA_ROOT, 'plugins')
+  Pathname.new(YAPRA_ROOT) + 'legacy_plugins',
+  Pathname.new(YAPRA_ROOT) + 'plugins'
 ]
 
 require 'yapra'
