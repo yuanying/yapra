@@ -6,22 +6,10 @@ class Yapra::LegacyPlugin
   attr_reader :run_method
   attr_reader :yapra
   
-  def initialize(yapra, module_name)
-    plugin_path   = nil
+  def initialize(yapra, plugin_path)
     @yapra        = yapra
-    @run_method   = module_name.sub(/.*::/,"")
-    $:.each do |load_path|
-      path = File.join(load_path, "#{module_name.gsub('::', File::SEPARATOR)}.rb")
-      if File.file?(path)
-        plugin_path = path
-        break
-      end
-    end
-    if plugin_path
-      instance_eval( @source = File.read(plugin_path).toutf8, plugin_path, 1)
-    else
-      raise LoadError
-    end
+    @run_method   = File.basename(plugin_path, '.*')
+    instance_eval( @source = File.read(plugin_path).toutf8, plugin_path, 1)
   end
   
   def eval_pragger(command_array, data)

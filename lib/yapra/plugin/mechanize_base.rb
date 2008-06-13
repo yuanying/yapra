@@ -1,4 +1,5 @@
 require 'mechanize'
+require 'kconv'
 require 'yapra/plugin/base'
 
 class Yapra::Plugin::MechanizeBase < Yapra::Plugin::Base

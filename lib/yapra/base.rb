@@ -63,6 +63,7 @@
 #         a: b
 #
 require 'logger'
+require 'pathname'
 require 'yapra'
 require 'yapra/inflector'
 require 'yapra/legacy_plugin'
@@ -70,11 +71,12 @@ require 'yapra/legacy_plugin'
 class Yapra::Base
   UPPER_CASE = /[A-Z]/
   
+  attr_accessor :legacy_plugins
   attr_accessor :logger
   attr_reader :env
   attr_reader :pipelines
   
-  def initialize global_config
+  def initialize global_config, legacy_plugin_directory_paths
     if global_config.kind_of?(Hash)
       @env = global_config['global'] || {}
       if global_config['pipeline']
@@ -93,6 +95,7 @@ class Yapra::Base
     end
     
     create_logger
+    load_legacy_plugins(legacy_plugin_directory_paths)
   end
   
   def execute
@@ -139,7 +142,7 @@ class Yapra::Base
   
   def run_legacy_plugin command, data
     self.logger.debug("evaluate plugin as legacy")
-    Yapra::LegacyPlugin.new(self, command['module']).run(command['config'], data)
+    legacy_plugins[command['module']].run(command['config'], data)
   end
   
   def load_class_constant module_name
@@ -149,6 +152,20 @@ class Yapra::Base
     nil
   rescue NameError
     nil
+  end
+  
+  def load_legacy_plugins paths
+    legacy_plugins = {}
+    paths.each do |folder|
+      Pathname.glob(folder + "**/*.rb").sort.each do |file|
+        begin
+          legacy_plugins[ 
+            file.relative_path_from(folder).to_s.gsub("/","::")[0..-4] 
+          ] = Yapra::LegacyPlugin.new(self, file)
+        rescue LoadError
+        end
+      end
+    end
   end
   
   def create_logger
