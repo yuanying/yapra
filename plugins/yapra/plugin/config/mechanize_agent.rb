@@ -11,19 +11,16 @@
 ##       user: username
 ##       password: password
 ##
-require 'mechanize'
-require 'yapra/plugin/base'
+require 'yapra/plugin/mechanize_base'
 
 module Yapra::Plugin::Config
-  class MechanizeAgent < Yapra::Plugin::Base
+  class MechanizeAgent < Yapra::Plugin::MechanizeBase
 
     def run(data)
-      pipeline_context['mechanize_agent'] ||= WWW::Mechanize.new
-      mechanize_agent = pipeline_context['mechanize_agent']
       
-      mechanize_agent.user_agent_alias = config['user_agent_alias'] || 'Windows IE 6'
+      agent.user_agent_alias = config['user_agent_alias'] || 'Windows IE 6'
       if config['proxy']
-        mechanize_agent.set_proxy(
+        agent.set_proxy(
           config['proxy']['addr'],
           config['proxy']['port'],
           config['proxy']['user'],

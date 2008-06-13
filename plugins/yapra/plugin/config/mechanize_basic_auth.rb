@@ -7,17 +7,12 @@
 ##     user: yuanying
 ##     password: password-dayo
 ##
-require 'yapra/plugin/base'
+require 'yapra/plugin/mechanize_base'
 
 module Yapra::Plugin::Config
-  class MechanizeBasicAuth < Yapra::Plugin::Base
+  class MechanizeBasicAuth < Yapra::Plugin::MechanizeBase
     def run(data)
-      agent = config['mechanize_agent']
-      if agent
-        agent.basic_auth(config['user'], config['password'])
-      else
-        logger.warn('Config::MechanizeAgent is not loaded.')
-      end
+      agent.basic_auth(config['user'], config['password'])
       data
     end
   end

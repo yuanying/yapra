@@ -9,17 +9,11 @@
 ##       pixiv_id: yuanying
 ##       pass: password-dayo
 ##
-require 'mechanize'
-require 'yapra/plugin/base'
+require 'yapra/plugin/mechanize_base'
 
 module Yapra::Plugin::Config
-  class MechanizePost < Yapra::Plugin::Base
+  class MechanizePost < Yapra::Plugin::MechanizeBase
     def run(data)
-      agent = config['mechanize_agent']
-      unless agent
-        logger.info('Config::MechanizeAgent is not loaded.')
-        agent = WWW::Mechanize.new
-      end
       agent.post(config['url'], config['params'])
       data
     end
