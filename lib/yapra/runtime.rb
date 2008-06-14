@@ -10,7 +10,13 @@ class Yapra::Runtime
   attr_reader :legacy_plugin_registry_factory
   
   def initialize config, legacy_plugin_registry_factory=nil
-    @config = Yapra::Config.new(config)
+    if config.kind_of?(Hash)
+      @config = Yapra::Config.new(config)
+    elsif config.kind_of?(Yapra::Config)
+      @config = config
+    else
+      raise ArgumentError.new "config is invalid."
+    end
     @logger = create_logger @config.env
     @legacy_plugin_registry_factory        = legacy_plugin_registry_factory
     @legacy_plugin_registry_factory.logger = @logger if @legacy_plugin_registry_factory

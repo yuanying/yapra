@@ -19,22 +19,32 @@ legacy_plugin_directory_paths = [
 ]
 
 require 'yapra/runtime'
+require 'yapra/config'
 require 'yapra/legacy_plugin/registry_factory'
 
-mode = 'compatible'
+mode        = 'compatible'
 config_file = "config.yaml"
+loglebel    = "warn"
 opt = OptionParser.new
 opt.on("-c", "--configfile CONFIGFILE") {|v| config_file = v }
 opt.on("-p", "--plugindir PLUGINDIR") {|v| legacy_plugin_directory_paths << v }
 opt.on("-m", "--mode MODE") { |v| mode = v }
+opt.on("--log-level LOGLEVEL") { |v| loglebel = v }
 # opt.on("-u", "--pluginusage PLUGINNAME") {|v| $plugins[v].source.gsub(/^## ?(.*)/){ puts $1 }; exit }
 # opt.on("-l", "--listplugin") { $plugins.keys.sort.each{|k| puts k }; exit }
 # opt.on("-w", "--where") { puts(Pathname.new(__FILE__).parent + "plugin"); exit }
 opt.parse!
 
 legacy_plugin_registry_factory = Yapra::LegacyPlugin::RegistryFactory.new(legacy_plugin_directory_paths, mode)
+config = YAML.load(File.read(config_file).toutf8.gsub(/base64::([\w+\/]+=*)/){ Base64.decode64($1) })
+config = Yapra::Config.new(config)
+config.env.update({
+  'log' => {
+    'level' => loglebel
+  }
+})
 yapra = Yapra::Runtime.new(
-  YAML.load(File.read(config_file).toutf8.gsub(/base64::([\w+\/]+=*)/){ Base64.decode64($1) }),
+  config,
   legacy_plugin_registry_factory
 )
 yapra.execute()
