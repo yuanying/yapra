@@ -15,6 +15,7 @@ module Yapra::LegacyPlugin
           module_name = file.relative_path_from(folder).to_s.gsub("/","::")[0..-4]
           begin
             legacy_plugins[ module_name ] = Yapra::LegacyPlugin::Base.new(self, file)
+            logger.debug "#{module_name} is loaded."
           rescue LoadError => ex
             logger.warn "#{module_name} can't load, because: #{ex.message}"
           end
@@ -23,7 +24,9 @@ module Yapra::LegacyPlugin
     end
     
     def get module_name
-      legacy_plugins[module_name]
+      plugin = legacy_plugins[module_name]
+      raise "#{module_name} is not registered." unless plugin
+      plugin
     end
   end
 end

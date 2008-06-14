@@ -7,13 +7,13 @@ require 'yapra/inflector'
 class Yapra::Runtime
   attr_reader :logger
   attr_reader :config
-  attr_reader :legacy_plugin_registory_factory
+  attr_reader :legacy_plugin_registry_factory
   
-  def initialize config, legacy_plugin_registory_factory=nil
+  def initialize config, legacy_plugin_registry_factory=nil
     @config = Yapra::Config.new(config)
     @logger = create_logger @config.env
-    @legacy_plugin_registory_factory        = legacy_plugin_registory_factory
-    @legacy_plugin_registory_factory.logger = @logger if @legacy_plugin_registory_factory
+    @legacy_plugin_registry_factory        = legacy_plugin_registry_factory
+    @legacy_plugin_registry_factory.logger = @logger if @legacy_plugin_registry_factory
   end
   
   def execute
@@ -25,7 +25,7 @@ class Yapra::Runtime
   def execute_pipeline pipeline_name, data=[]
     self.logger.info("# pipeline '#{pipeline_name}' is started...")
     command_array = self.config.pipeline_commands[pipeline_name]
-    legacy_plugin_registory = legacy_plugin_registory_factory.create if legacy_plugin_registory_factory
+    legacy_plugin_registory = legacy_plugin_registry_factory.create if legacy_plugin_registry_factory
     
     pipeline = Yapra::Pipeline.new(self, pipeline_name)
     pipeline.legacy_plugin_registry = legacy_plugin_registory

@@ -1,7 +1,7 @@
 require 'yapra/legacy_plugin'
 require 'yapra/inflector'
 
-class Yapra::LegacyPlugin::RegistoryFactory
+class Yapra::LegacyPlugin::RegistryFactory
   attr_accessor :logger
   attr_reader :plugin_paths
   attr_reader :registry_class

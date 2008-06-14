@@ -20,7 +20,6 @@ class Yapra::Pipeline
   end
   
   def run pipeline_command, data=[]
-    self.logger.info("# pipeline '#{pipeline_name}' is started...")
     pipeline_command.inject(data) do |data, command|
       execute_plugin(command, data.clone)
     end
