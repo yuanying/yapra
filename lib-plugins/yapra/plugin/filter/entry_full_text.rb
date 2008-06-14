@@ -10,7 +10,7 @@
 ##       dc_creator: "//div[@id='profile']/div/text()"
 ##       author: "//div[@id='profile']/div/text()"
 ##       description: "//div[@id='content2']"
-##     apply_template_after_extacted:
+##     apply_template_after_extracted:
 ##       content_encoded: '<div><%= title %></div>'
 ##
 require 'yapra/plugin/mechanize_base'
@@ -25,6 +25,8 @@ module Yapra::Plugin::Filter
         regexp = /^(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)$/
       end
       
+      wait = config['wait'] || 1
+      
       data.map! do |item|
         url = item
         if item.respond_to?('link')
@@ -33,7 +35,7 @@ module Yapra::Plugin::Filter
 
         if regexp =~ url
           page = agent.get(url)
-          sleep 1
+          sleep wait
           logger.info "Process: #{url}"
 
           unless(item.instance_of?(RSS::RDF::Item))

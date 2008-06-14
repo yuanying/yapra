@@ -7,7 +7,7 @@
 ##       description: '//div'
 ##       link: '//li[2]'
 ##       title: '//p'
-##     apply_template_after_extacted:
+##     apply_template_after_extracted:
 ##       content_encoded: '<div><%= title %></div>'
 ##
 require 'yapra/plugin/mechanize_base'

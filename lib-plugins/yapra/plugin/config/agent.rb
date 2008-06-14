@@ -2,7 +2,7 @@
 ##
 ## add WWW::Mechanize agent to context.
 ## 
-## - module: Config::MechanizeAgent
+## - module: Config::Agent
 ##   config:
 ##     user_agent_alias: Windows IE 6
 ##     proxy:

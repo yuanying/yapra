@@ -2,7 +2,7 @@
 ##
 ## post to web page with WWW::Mechanize agent.
 ## 
-## - module: Config::MechanizeBasicAuth
+## - module: Config::BasicAuth
 ##   config:
 ##     user: yuanying
 ##     password: password-dayo

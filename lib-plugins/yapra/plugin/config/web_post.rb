@@ -2,7 +2,7 @@
 ##
 ## post to web page with WWW::Mechanize agent.
 ## 
-## - module: Config::MechanizePost
+## - module: Config::WebPost
 ##   config:
 ##     url: http://www.pixiv.net/index.php
 ##     params:
