@@ -42,7 +42,7 @@ module Yapra::Plugin::Publish
 
         if regexp =~ url
           referrer = construct_data(config['referrer'], item)
-          download(config, agent, item, url, referrer)
+          download(item, url, referrer)
           sleep wait
         end
       end
@@ -88,7 +88,7 @@ module Yapra::Plugin::Publish
         eval(config['before_hook'])
       end
       page = agent.get(url, referrer)
-      puts "Download: #{url}"
+      logger.info "Download: #{url}"
       if config['after_hook']
         eval(config['after_hook'])
       end
