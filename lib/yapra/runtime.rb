@@ -15,7 +15,7 @@ class Yapra::Runtime
     elsif config.kind_of?(Yapra::Config)
       @config = config
     else
-      raise ArgumentError.new "config is invalid."
+      raise ArgumentError.new("config is invalid.")
     end
     @logger = create_logger @config.env
     @legacy_plugin_registry_factory        = legacy_plugin_registry_factory
