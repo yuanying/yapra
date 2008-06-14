@@ -14,7 +14,9 @@ class Yapra::LegacyPlugin::RegistryFactory
     @plugin_paths = plugin_paths
   end
   
-  def create
-    registry_class.new(plugin_paths, logger)
+  def create pipeline
+    registry = registry_class.new(plugin_paths, pipeline, logger)
+    pipeline.legacy_plugin_registry = registry
+    registry
   end
 end
