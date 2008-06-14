@@ -22,9 +22,19 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #++
 module Yapra
+  extend self
+  
+  # TODO create util class, and move this method.
+  def load_class_constant module_name
+    require Yapra::Inflector.underscore(module_name)
+    Yapra::Inflector.constantize(module_name)
+  rescue LoadError
+    nil
+  rescue NameError
+    nil
+  end
 end
 require 'rss/1.0'
 require 'rss/2.0'
 require 'rss/maker'
 require 'rubygems'
-require 'yapra/base'

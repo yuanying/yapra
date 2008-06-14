@@ -66,7 +66,7 @@ require 'logger'
 require 'pathname'
 require 'yapra'
 require 'yapra/inflector'
-require 'yapra/legacy_plugin'
+require 'yapra/legacy_plugin/base'
 
 class Yapra::Base
   UPPER_CASE = /[A-Z]/
@@ -165,7 +165,7 @@ class Yapra::Base
       Pathname.glob(folder + "**/*.rb").sort.each do |file|
         module_name = file.relative_path_from(folder).to_s.gsub("/","::")[0..-4]
         begin
-          legacy_plugins[ module_name ] = Yapra::LegacyPlugin.new(self, file)
+          legacy_plugins[ module_name ] = Yapra::LegacyPlugin::Base.new(self, file)
         rescue LoadError => ex
           logger.warn "#{module_name} can't load, because: #{ex.message}"
         end

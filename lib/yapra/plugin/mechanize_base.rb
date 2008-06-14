@@ -4,8 +4,8 @@ require 'yapra/plugin/base'
 
 class Yapra::Plugin::MechanizeBase < Yapra::Plugin::Base
   def agent
-    pipeline_context['mechanize_agent'] ||= WWW::Mechanize.new
-    pipeline_context['mechanize_agent']
+    pipeline.context['mechanize_agent'] ||= WWW::Mechanize.new
+    pipeline.context['mechanize_agent']
   end
   
   def extract_attribute_from element, item
