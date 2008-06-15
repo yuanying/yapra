@@ -41,7 +41,7 @@ class Yapra::Pipeline
   
   def run_legacy_plugin command, data
     self.logger.debug("evaluate plugin as legacy")
-    legacy_plugin_registry.get(command['module']).run(command['config'], data)
+    legacy_plugin_registry.get(command['module'])._yapra_run_as_legacy_plugin(command['config'], data)
   end
   
   def run_class_based_plugin command, data

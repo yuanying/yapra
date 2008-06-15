@@ -15,7 +15,7 @@ module Yapra::LegacyPlugin
           module_name = file.relative_path_from(folder).to_s.gsub("/","::")[0..-4]
           begin
             legacy_plugins[ module_name ] = Yapra::LegacyPlugin::Base.new(pipeline, file)
-            logger.debug "#{module_name} is loaded."
+            logger.debug "#{module_name} is loaded from #{file}"
           rescue LoadError => ex
             logger.warn "#{module_name} can't load, because: #{ex.message}"
           end

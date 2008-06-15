@@ -24,7 +24,7 @@ module Yapra::LegacyPlugin
           if file.file?()
             plugin = Yapra::LegacyPlugin::Base.new(pipeline, file)
             legacy_plugins[ module_name ] = plugin
-            logger.debug "#{module_name} is loaded."
+            logger.debug "#{module_name} is loaded from #{file}"
             break
           end
         end
