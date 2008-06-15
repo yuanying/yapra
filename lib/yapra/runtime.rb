@@ -9,7 +9,7 @@ class Yapra::Runtime
   attr_reader :env
   attr_reader :legacy_plugin_registry_factory
   
-  def initialize env, legacy_plugin_registry_factory=nil
+  def initialize env={}, legacy_plugin_registry_factory=nil
     @env    = env
     @logger = create_logger env
     
