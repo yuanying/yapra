@@ -45,7 +45,7 @@ config.env.update({
   }
 }) if loglebel
 yapra = Yapra::Runtime.new(
-  config,
+  config.env,
   legacy_plugin_registry_factory
 )
-yapra.execute()
+yapra.execute(config.pipeline_commands)

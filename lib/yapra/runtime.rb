@@ -6,39 +6,28 @@ require 'yapra/inflector'
 
 class Yapra::Runtime
   attr_reader :logger
-  attr_reader :config
+  attr_reader :env
   attr_reader :legacy_plugin_registry_factory
   
-  def initialize config, legacy_plugin_registry_factory=nil
-    if config.kind_of?(Hash)
-      @config = Yapra::Config.new(config)
-    elsif config.kind_of?(Yapra::Config)
-      @config = config
-    else
-      raise ArgumentError.new("config is invalid.")
-    end
-    @logger = create_logger @config.env
+  def initialize env, legacy_plugin_registry_factory=nil
+    @env    = env
+    @logger = create_logger env
+    
     @legacy_plugin_registry_factory        = legacy_plugin_registry_factory
     @legacy_plugin_registry_factory.logger = @logger if @legacy_plugin_registry_factory
   end
   
-  def execute
-    self.config.pipeline_commands.each_key do |k|
-      execute_pipeline k, []
+  def execute pipeline_commands
+    pipeline_commands.each do |k, v|
+      execute_pipeline k, v, []
     end
   end
   
-  def execute_pipeline pipeline_name, data=[]
+  def execute_pipeline pipeline_name, command_array, data=[]
     self.logger.info("# pipeline '#{pipeline_name}' is started...")
-    command_array = self.config.pipeline_commands[pipeline_name]
-    
     pipeline = Yapra::Pipeline.new(self, pipeline_name)
     legacy_plugin_registory = legacy_plugin_registry_factory.create(pipeline) if legacy_plugin_registry_factory
     pipeline.run(command_array, data)
-  end
-  
-  def env
-    @config.env
   end
   
   protected
