@@ -56,6 +56,8 @@ class Yapra::Runtime
     
     if env['log'] && env['log']['level']
       logger.level = Yapra::Inflector.constantize("Logger::#{env['log']['level'].upcase}")
+    else
+      logger.level = Logger::WARN
     end
     logger
   end

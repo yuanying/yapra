@@ -1,5 +1,5 @@
 # require 'pathname'
-require 'yapra/inflector'
+require 'yapra'
 
 module Yapra::LegacyPlugin
 end
