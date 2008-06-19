@@ -28,7 +28,7 @@ config_file = "config.yaml"
 loglebel    = nil
 opt = OptionParser.new
 opt.on("-c", "--configfile CONFIGFILE") {|v| config_file = v }
-opt.on("-p", "--plugindir PLUGINDIR") {|v| legacy_plugin_directory_paths << v }
+opt.on("-p", "--plugindir PLUGINDIR") {|v| legacy_plugin_directory_paths << Pathname.new(v) }
 opt.on("-m", "--mode MODE", 'compatible / advance') { |v| mode = v }
 opt.on("--log-level LOGLEVEL", 'fatal / error / warn / info / debug') { |v| loglebel = v }
 # opt.on("-u", "--pluginusage PLUGINNAME") {|v| $plugins[v].source.gsub(/^## ?(.*)/){ puts $1 }; exit }
