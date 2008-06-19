@@ -31,9 +31,12 @@ module Yapra::Plugin::Publish
       mailbox   = config['mailbox'] || 'inbox'
       wait      = config['wait'] || 1
       
-      subject_prefix  = config['subject_prefix'] || ''
-      from            = config['from'] || 'yapra@localhost'
-      to              = config['to']   || 'me@localhost'
+      unless config['mail']
+        config['mail'] = {}
+      end
+      subject_prefix  = config['mail']['subject_prefix'] || ''
+      from            = config['mail']['from'] || 'yapra@localhost'
+      to              = config['mail']['to']   || 'me@localhost'
       
       imap = create_imap server, port, usessl
       logger.info(imap.greeting)
