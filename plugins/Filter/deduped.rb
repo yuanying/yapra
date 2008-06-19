@@ -28,13 +28,13 @@ def deduped config, data
   if cachepath.relative?
     cachepath = cacheroot + cachepath
   end
-  puts '  cache path: ' + cachepath
+  #puts 'cache path: ' + cachepath
 
   if !File.exists?(cachepath)
     begin
       mkdir_p cachepath
     rescue
-      puts "could'nt make cache directory"
+      STDERR.puts "could'nt make cache directory"
       return data
     end
   end
