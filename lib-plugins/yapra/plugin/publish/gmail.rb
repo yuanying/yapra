@@ -15,7 +15,7 @@
 #       to: 'test2@example.com'
 #
 require 'net/imap'
-require 'yapra/plugin/base'
+require 'yapra/plugin/publish/imap'
 
 module Yapra::Plugin::Publish
   class Gmail < Yapra::Plugin::Publish::Imap
