@@ -18,7 +18,7 @@ require 'net/imap'
 require 'yapra/plugin/base'
 
 module Yapra::Plugin::Publish
-  class Gmail < Yapra::Plugin::Base
+  class Gmail < Yapra::Plugin::Publish::Imap
     protected
     def create_imap server, port, usessl
       Net::IMAP.new('imap.gmail.com', 993, true)
