@@ -1,14 +1,14 @@
 require 'yapra/version'
 
-AUTHOR = 'FIXME full name'  # can also be an array of Authors
-EMAIL = "FIXME email"
-DESCRIPTION = "description of gem"
+AUTHOR = 'Yuanying'  # can also be an array of Authors
+EMAIL = "yuanying at fraction dot jp"
+DESCRIPTION = "Yet another pragger implementation."
 GEM_NAME = 'yapra' # what ppl will type to install your gem
 RUBYFORGE_PROJECT = 'yapra' # The unix name for your project
 HOMEPATH = "http://#{RUBYFORGE_PROJECT}.rubyforge.org"
 DOWNLOAD_PATH = "http://rubyforge.org/projects/#{RUBYFORGE_PROJECT}"
 EXTRA_DEPENDENCIES = [
-#  ['activesupport', '>= 1.3.1']
+  ['mechanize', '>= 0.7.6']
 ]    # An array of rubygem dependencies [name, version]
 
 @config_file = "~/.rubyforge/user-config.yml"
@@ -63,7 +63,9 @@ $hoe = Hoe.new(GEM_NAME, VERS) do |p|
   p.changes = p.paragraphs_of("History.txt", 0..1).join("\n\n")
   #p.extra_deps = EXTRA_DEPENDENCIES
 
-    #p.spec_extras = {}    # A hash of extra values to set in the gemspec.
+  p.spec_extras = {
+    'require_paths' => ['lib', 'lib-plugins']
+  }
   end
 
 CHANGES = $hoe.paragraphs_of('History.txt', 0..1).join("\\n\\n")

@@ -2,7 +2,6 @@ require 'yapra/legacy_plugin'
 require 'yapra/inflector'
 
 class Yapra::LegacyPlugin::RegistryFactory
-  attr_accessor :logger
   attr_reader :plugin_paths
   attr_reader :registry_class
   
@@ -15,7 +14,7 @@ class Yapra::LegacyPlugin::RegistryFactory
   end
   
   def create pipeline
-    registry = registry_class.new(plugin_paths, pipeline, logger)
+    registry = registry_class.new(plugin_paths, pipeline)
     pipeline.legacy_plugin_registry = registry
     registry
   end

@@ -9,6 +9,6 @@ class Yapra::Plugin::Base
   include Yapra::Plugin::ErbApplier
   
   def logger
-    self.yapra.logger
+    Yapra::Runtime.logger
   end
 end

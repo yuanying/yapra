@@ -16,7 +16,7 @@ class Yapra::Pipeline
   end
   
   def logger
-    @yapra.logger
+    Yapra::Runtime.logger
   end
   
   def run pipeline_command, data=[]

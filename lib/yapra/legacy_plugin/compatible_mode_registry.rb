@@ -4,10 +4,8 @@ require 'yapra/legacy_plugin'
 module Yapra::LegacyPlugin
   class CompatibleModeRegistry
     attr_accessor :legacy_plugins
-    attr_accessor :logger
       
-    def initialize paths, pipeline, logger
-      self.logger = logger
+    def initialize paths, pipeline
       self.legacy_plugins = {}
       
       paths.each do |folder|
@@ -21,6 +19,10 @@ module Yapra::LegacyPlugin
           end
         end
       end
+    end
+    
+    def logger
+      Yapra::Runtime.logger
     end
     
     def get module_name

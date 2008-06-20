@@ -5,15 +5,17 @@ module Yapra::LegacyPlugin
   
   class AdvanceModeRegistry
     attr_accessor :legacy_plugins
-    attr_accessor :logger
     attr_accessor :plugin_paths
     attr_accessor :pipeline
     
-    def initialize paths, pipeline, logger
-      self.logger = logger
+    def initialize paths, pipeline
       self.legacy_plugins = {}
       self.plugin_paths = paths.reverse
       self.pipeline = pipeline
+    end
+    
+    def logger
+      Yapra::Runtime.logger
     end
     
     def get module_name

@@ -54,6 +54,7 @@
 #       config:
 #         a: b
 #
+require 'logger'
 require 'yapra'
 
 class Yapra::Config
@@ -77,6 +78,26 @@ class Yapra::Config
     else
       raise 'config file is invalid!'
     end
+  end
+  
+  def create_logger
+    logger = nil
+    if env['log'] && env['log']['out']
+      if env['log']['out'].index('file://')
+        logger = Logger.new(URI.parse(env['log']['out']).path)
+      else
+        logger = Logger.new(Yapra::Inflector.constantize(env['log']['out'].upcase))
+      end
+    else
+      logger = Logger.new(STDOUT)
+    end
+    
+    if env['log'] && env['log']['level']
+      logger.level = Yapra::Inflector.constantize("Logger::#{env['log']['level'].upcase}")
+    else
+      logger.level = Logger::WARN
+    end
+    logger
   end
   
 end

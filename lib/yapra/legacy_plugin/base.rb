@@ -12,6 +12,10 @@ class Yapra::LegacyPlugin::Base
     instance_eval( @source = File.read(plugin_path).toutf8, plugin_path, 1)
   end
   
+  def logger
+    Yapra::Runtime.logger
+  end
+  
   def eval_pragger(command_array, data)
     pipeline.execute_plugins(command_array, data)
   end
