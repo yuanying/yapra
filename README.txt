@@ -1,32 +1,50 @@
 = yapra
 
-* FIX (url)
+* http://www.fraction.jp/trac/rana2/wiki/Yapra
 
 == DESCRIPTION:
 
-FIX (describe your package)
+Yet Another Pragger(http://pragger.ikejisoft.com/) implementation.
 
 == FEATURES/PROBLEMS:
 
-* FIX (list of features or problems)
+* 99% compatible of Pragger.
+* Class-based plugin support.
+* Loadpass based plugin loading strategy. (also support pragger's plugin in advance mode.)
+* Support Python habu like config file.
 
 == SYNOPSIS:
 
-  FIX (code sample of usage)
+=== Use at command
+
+  $ yapra -c config_file.yml
+
+=== Use in your application
+
+  require 'yapra/runtime'
+  require 'yapra/config'
+  
+  config = YAML.load(config_file)
+  config = Yapra::Config.new(config)
+  
+  Yapra::Runtime.logger = Logger.new(STDOUT)
+  
+  yapra = Yapra::Runtime.new(config.env)
+  yapra.execute(config.pipeline_commands)
 
 == REQUIREMENTS:
 
-* FIX (list of requirements)
+* mechanize (>= 0.7.6)
 
 == INSTALL:
 
-* FIX (sudo gem install, anything else)
+* sudo gem install yapra
 
 == LICENSE:
 
 (The MIT License)
 
-Copyright (c) 2008 FIXME full name
+Copyright (c) 2008 Yuanying Ohtsuka
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
