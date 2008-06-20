@@ -42,12 +42,14 @@ module Yapra::Plugin::Publish
       logger.info(imap.greeting)
       
       imap.login(username, password)
+      logger.info('imap login was succeed.')
       imap.examine(mailbox)
       data.each do |item|
         date = item.date || item.dc_date || Time.now
         content = item.content_encoded || item.description || 'from Yapra.'
         content = [content].pack('m')
-        imap.append("inbox", <<EOF.gsub(/¥n/, "¥r¥n"), nil, date)
+        logger.debug("try append item: #{date}")
+        imap.append(mailbox, <<EOF.gsub(/¥n/, "¥r¥n"), nil, date)
 From: #{from}
 To: #{to}
 Date: #{date.rfc2822}
