@@ -6,6 +6,7 @@
 * 2 majar enhancement:
   * A few plugins are added.
   * RDoc is improved.
+  * -d option is added.
 
 == 0.1.0 2008-06-20
 

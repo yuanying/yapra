@@ -22,12 +22,17 @@ require 'yapra/runtime'
 require 'yapra/config'
 require 'yapra/legacy_plugin/registry_factory'
 
-Version     = '0.1.0'
-mode        = 'compatible'
-config_file = "config.yaml"
-loglebel    = nil
+Version       = '0.1.0'
+mode          = 'compatible'
+config_files  = []#"config.yaml"
+loglebel      = nil
 opt = OptionParser.new
-opt.on("-c", "--configfile CONFIGFILE") {|v| config_file = v }
+opt.on("-c", "--configfile CONFIGFILE") {|v| config_files << v }
+opt.on("-d", "--configfile-directory CONFIGFILE_DIRECTORY") { |v|
+  Dir.glob(File.join(v, '**/*.yml')).each do |file|
+    config_files << file
+  end
+}
 opt.on("-p", "--plugindir PLUGINDIR") {|v| legacy_plugin_directory_paths << v }
 opt.on("-m", "--mode MODE", 'compatible / advance') { |v| mode = v }
 opt.on("--log-level LOGLEVEL", 'fatal / error / warn / info / debug') { |v| loglebel = v }
@@ -36,17 +41,22 @@ opt.on("--log-level LOGLEVEL", 'fatal / error / warn / info / debug') { |v| logl
 # opt.on("-w", "--where") { puts(Pathname.new(__FILE__).parent + "plugin"); exit }
 opt.parse!
 
+config_files << 'config.yaml' if config_files.size == 0
+
 legacy_plugin_registry_factory = Yapra::LegacyPlugin::RegistryFactory.new(legacy_plugin_directory_paths, mode)
-config = YAML.load(File.read(config_file).toutf8.gsub(/base64::([\w+\/]+=*)/){ Base64.decode64($1) })
-config = Yapra::Config.new(config)
-config.env.update({
-  'log' => {
-    'level' => loglebel
-  }
-}) if loglebel
-Yapra::Runtime.logger = config.create_logger
-yapra = Yapra::Runtime.new(
-  config.env,
-  legacy_plugin_registry_factory
-)
-yapra.execute(config.pipeline_commands)
+
+config_files.each do |config_file|
+  config = YAML.load(File.read(config_file).toutf8.gsub(/base64::([\w+\/]+=*)/){ Base64.decode64($1) })
+  config = Yapra::Config.new(config)
+  config.env.update({
+    'log' => {
+      'level' => loglebel
+    }
+  }) if loglebel
+  Yapra::Runtime.logger = config.create_logger
+  yapra = Yapra::Runtime.new(
+    config.env,
+    legacy_plugin_registry_factory
+  )
+  yapra.execute(config.pipeline_commands)
+end
