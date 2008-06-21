@@ -1,3 +1,8 @@
+== 0.1.1
+
+* 1 bug fix:
+  * Publish::Imap, mailbox select fixed.
+
 == 0.1.0 2008-06-20
 
 * 1 major enhancement:
