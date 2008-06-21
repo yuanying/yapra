@@ -36,8 +36,8 @@ module Yapra::Plugin::Filter
             item = new_item
           end
           
-          if config
-            config.each do |k, template|
+          if plugin_config
+            plugin_config.each do |k, template|
               value = apply_template template, binding
               set_attribute_to item, k, value
             end
