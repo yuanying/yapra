@@ -1,18 +1,23 @@
-## - module: Feed::Custom
-##   config:
-##     url: 'http://www.fraction.jp/'
-##     extract_xpath:
-##       capture: '//div'
-##       split: '//div[@class="test"]'
-##       description: '//div'
-##       link: '//li[2]'
-##       title: '//p'
-##     apply_template_after_extracted:
-##       content_encoded: '<div><%= title %></div>'
-##
 require 'yapra/plugin/mechanize_base'
 
 module Yapra::Plugin::Feed
+  # = Feed::Custom
+  # 
+  # generate rss feed from web page.
+  # 
+  # example:
+  # 
+  #     - module: Feed::Custom
+  #       config:
+  #         url: 'http://www.fraction.jp/'
+  #         extract_xpath:
+  #           capture: '//div'
+  #           split: '//div[@class="test"]'
+  #           description: '//div'
+  #           link: '//li[2]'
+  #           title: '//p'
+  #         apply_template_after_extracted:
+  #           content_encoded: '<div><%= title %></div>'
   class Custom < Yapra::Plugin::MechanizeBase
     def run(data)
       page    = agent.get(config['url'])

@@ -1,26 +1,26 @@
-# module: Publish::Imap -- Yuanying
-#
-# publish entry to imap mail.
-#
-# example:
-#
-# - module: Publish::Imap
-#   config:
-#     username: username
-#     password: password
-#     imap_server: imap.gmail.com
-#     port: 993
-#     ssl: on
-#     wait: 1
-#     mail:
-#       subject_prefix: '[Yapra]'
-#       from: 'test@example.com'
-#       to: 'test2@example.com'
-#
 require 'net/imap'
 require 'yapra/plugin/base'
 
 module Yapra::Plugin::Publish
+  # = module: Publish::Imap -- Yuanying
+  # 
+  # publish entry to imap mail.
+  # 
+  # example:
+  # 
+  #     - module: Publish::Imap
+  #       config:
+  #         username: username
+  #         password: password
+  #         imap_server: imap.gmail.com
+  #         port: 993
+  #         ssl: on
+  #         wait: 1
+  #         mail:
+  #           subject_prefix: '[Yapra]'
+  #           from: 'test@example.com'
+  #           to: 'test2@example.com'
+  #
   class Imap < Yapra::Plugin::Base
     def run(data)
       username  = config['username']

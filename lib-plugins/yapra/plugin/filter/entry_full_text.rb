@@ -1,21 +1,21 @@
-## Filter::EntryFullText -- Yuanying
-##
-## get the entry full text from page with WWW::Mechanize.
-## 
-## - module: Filter::EntryFullText
-##   config:
-##     regexp: http://www\.pixiv\.net/*
-##     extract_xpath:
-##       title: '//title/text()'
-##       dc_creator: "//div[@id='profile']/div/text()"
-##       author: "//div[@id='profile']/div/text()"
-##       description: "//div[@id='content2']"
-##     apply_template_after_extracted:
-##       content_encoded: '<div><%= title %></div>'
-##
 require 'yapra/plugin/mechanize_base'
 
 module Yapra::Plugin::Filter
+  # Filter::EntryFullText -- Yuanying
+  # 
+  # get the entry full text from page with WWW::Mechanize.
+  # 
+  #     - module: Filter::EntryFullText
+  #       config:
+  #         regexp: http://www\.pixiv\.net/*
+  #         extract_xpath:
+  #           title: '//title/text()'
+  #           dc_creator: "//div[@id='profile']/div/text()"
+  #           author: "//div[@id='profile']/div/text()"
+  #           description: "//div[@id='content2']"
+  #         apply_template_after_extracted:
+  #           content_encoded: '<div><%= title %></div>'
+  
   class EntryFullText < Yapra::Plugin::MechanizeBase
     def run(data)
       regexp = nil
