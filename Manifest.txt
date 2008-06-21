@@ -5,6 +5,7 @@ Manifest.txt
 PostInstall.txt
 README.txt
 Rakefile
+bin/yapra
 config/hoe.rb
 config/requirements.rb
 legacy_plugins/Download/nicovideo.rb
@@ -60,9 +61,9 @@ lib-plugins/yapra/plugin/feed/custom.rb
 lib-plugins/yapra/plugin/feed/load.rb
 lib-plugins/yapra/plugin/filter/entry_full_text.rb
 lib-plugins/yapra/plugin/publish/file_download.rb
-lib-plugins/yapra/plugin/publish/on_memory_download.rb
 lib-plugins/yapra/plugin/publish/gmail.rb
 lib-plugins/yapra/plugin/publish/imap.rb
+lib-plugins/yapra/plugin/publish/on_memory_download.rb
 lib-plugins/yapra/plugin/test/append_entry.rb
 lib/yapra.rb
 lib/yapra/config.rb
@@ -84,7 +85,6 @@ lib/yapra/version.rb
 plugins/Filter/deduped.rb
 plugins/Filter/sort.rb
 plugins/Filter/subs.rb
-bin/yapra
 script/console
 script/destroy
 script/generate
@@ -97,7 +97,6 @@ tasks/deployment.rake
 tasks/environment.rake
 tasks/rspec.rake
 tasks/website.rake
-website/index.html
 website/index.txt
 website/javascripts/rounded_corners_lite.inc.js
 website/stylesheets/screen.css

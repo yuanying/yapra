@@ -1,4 +1,9 @@
+require 'logger'
+require 'yapra'
+
 # = Config Examples
+#
+# Config file for yapra.
 # 
 # == Format 1: Pragger like.
 # A simplest. You can run one pipeline without global config.
@@ -54,9 +59,6 @@
 #       config:
 #         a: b
 #
-require 'logger'
-require 'yapra'
-
 class Yapra::Config
   attr_reader :env
   attr_reader :pipeline_commands

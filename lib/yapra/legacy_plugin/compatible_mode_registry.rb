@@ -9,7 +9,8 @@ module Yapra::LegacyPlugin
       self.legacy_plugins = {}
       
       paths.each do |folder|
-        Pathname.glob(folder + "**/*.rb").sort.each do |file|
+        folder = Pathname.new(folder)
+        Pathname.glob(File.join(folder, "**/*.rb")).sort.each do |file|
           module_name = file.relative_path_from(folder).to_s.gsub("/","::")[0..-4]
           begin
             legacy_plugins[ module_name ] = Yapra::LegacyPlugin::Base.new(pipeline, file)

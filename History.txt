@@ -3,6 +3,10 @@
 * 1 bug fix:
   * Publish::Imap, mailbox select fixed.
 
+* 2 majar enhancement:
+  * A few plugins are added.
+  * RDoc is improved.
+
 == 0.1.0 2008-06-20
 
 * 1 major enhancement:
