@@ -11,7 +11,7 @@ module Yapra::Plugin::Publish
   #       config:
   #         regexp: http://www\.yahoo\.co\.jp/*
   #         attribute: binary_image
-  #         auto_suffix: true
+  #         base64: true
   #         before_hook: "agent.get('http://www.yahoo.co.jp/'); sleep 1"
   #         url:
   #           attribute: link
@@ -64,7 +64,9 @@ module Yapra::Plugin::Publish
     end
     
     def save config, item, page
-      set_attribute_to item, config['attribute'], page.body
+      data = page.body
+      data = [data].pack('m') if config['base64']
+      set_attribute_to item, config['attribute'], data
     end
     
     def download(item, url, referrer)
