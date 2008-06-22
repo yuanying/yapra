@@ -19,6 +19,27 @@ class Yapra::Pipeline
     Yapra::Runtime.logger
   end
   
+  # start pipeline from commands.
+  # 
+  # example:
+  # 
+  #     pipeline.run([
+  #       {
+  #         'module' => 'Config::agent',
+  #         'config' => {
+  #           'user_agent_alias' => 'Windows IE 6'
+  #         }
+  #       },
+  #       {
+  #         'module' => 'RSS::load',
+  #         'config' => {
+  #           'uri' => 'http://www.example.com/hoge.rdf'
+  #         }
+  #       },
+  #       {
+  #         'module' => 'print'
+  #       }
+  #     ])
   def run pipeline_command, data=[]
     pipeline_command.inject(data) do |data, command|
       execute_plugin(command, data.clone)

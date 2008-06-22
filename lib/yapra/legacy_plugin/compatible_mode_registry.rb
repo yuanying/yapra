@@ -4,7 +4,9 @@ require 'yapra/legacy_plugin'
 module Yapra::LegacyPlugin
   class CompatibleModeRegistry
     attr_accessor :legacy_plugins
-      
+    
+    # _paths_ :: Directory paths which contain legacy plugins.
+    # _pipeline_ :: Runtime pipline.
     def initialize paths, pipeline
       self.legacy_plugins = {}
       
@@ -26,6 +28,13 @@ module Yapra::LegacyPlugin
       Yapra::Runtime.logger
     end
     
+    # load plugin from module name.
+    # 
+    # example:
+    # 
+    #     registry = Yapra::LegacyPlugin::CompatibleModeRegistry.new(paths, pipeline)
+    #     feed_load_plugin = registry.get('Feed::load')
+    #
     def get module_name
       plugin = legacy_plugins[module_name]
       raise "#{module_name} is not registered." unless plugin
