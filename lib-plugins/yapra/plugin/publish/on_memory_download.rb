@@ -36,6 +36,7 @@ module Yapra::Plugin::Publish
         url = construct_data(config['url'], item, item.respond_to?('link') ? item.link : item)
 
         if regexp =~ url
+          logger.info "Download start: #{url}"
           referrer = construct_data(config['referrer'], item)
           download(item, url, referrer)
           sleep wait
@@ -74,7 +75,6 @@ module Yapra::Plugin::Publish
       dir = config['dir']
       
       page = agent.get(url, referrer)
-      logger.info "Download: #{url}"
       
       save(config, item, page)
       

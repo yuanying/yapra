@@ -10,6 +10,6 @@ module Yapra::Plugin::ErbApplier
         template = io.read
       end
     end
-    ERB.new(template).result(apply_binding)
+    ERB.new(template, nil, '-').result(apply_binding)
   end
 end
