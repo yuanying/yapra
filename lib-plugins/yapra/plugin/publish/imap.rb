@@ -60,7 +60,7 @@ module Yapra::Plugin::Publish
         boundary = "----_____====#{Time.now.to_i}--BOUDARY"
         attachments = create_attachments(item, config)
         imap.append(mailbox, apply_template(mail_template, binding), nil, date)
-        #puts apply_template(mail_template, binding)
+        # puts apply_template(mail_template, binding)
 
         sleep wait
       end
@@ -76,11 +76,11 @@ module Yapra::Plugin::Publish
     end
     
     def encode_field field
-      #field.gsub(/[　-瑤]\S*\s*/) {|x|
-        field.scan(/.{1,10}/).map {|y|
+      field.gsub(/[^\x01-\x7f]*/) {|x|
+        x.scan(/.{1,10}/).map {|y|
           "=?UTF-8?B?" + y.to_a.pack('m').chomp + "?="
         }.join("\n ")
-      #}
+      }
     end
     
     def create_attachments item, config
@@ -107,7 +107,6 @@ MIME-Version: 1.0
 X-Mailer: Yapra <%=Yapra::VERSION::STRING %>
 Subject: <%=encode_field(subject_prefix + item.title) %>
 Content-Type: multipart/mixed; boundary="<%=boundary -%>"
-Content-Transfer-Encoding: 7bit
 
 This is a multi-part message in MIME format.
 
