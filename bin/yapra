@@ -32,6 +32,9 @@ opt.on("-d", "--configfile-directory CONFIGFILE_DIRECTORY") { |v|
   Dir.glob(File.join(v, '**/*.yml')).each do |file|
     config_files << file
   end
+  Dir.glob(File.join(v, '**/*.yaml')).each do |file|
+    config_files << file
+  end
 }
 opt.on("-p", "--plugindir PLUGINDIR") {|v| legacy_plugin_directory_paths << v }
 opt.on("-m", "--mode MODE", 'compatible / advance') { |v| mode = v }

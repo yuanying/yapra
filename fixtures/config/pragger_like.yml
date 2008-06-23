@@ -1,0 +1,12 @@
+- module: Feed::pixiv_tag
+  config:
+    id: yuanying
+    password: kojiro
+    tag: C74
+
+- module: RSS::save
+  config:
+    #filename: /Users/Shared/Sites/fraction/feed.xml
+    filename: pixiv.xml
+    link: http://www.pixiv.net/tags.php?tag=C74
+    title: Pixiv - C74

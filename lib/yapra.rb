@@ -42,3 +42,5 @@ require 'rss/2.0'
 require 'rss/dublincore'
 require 'rss/maker'
 require 'rubygems'
+
+require 'yapra/inflector'

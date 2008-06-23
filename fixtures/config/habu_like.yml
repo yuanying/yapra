@@ -1,0 +1,43 @@
+global:
+  log:
+    out: stderr
+    level: debug
+      
+pipeline:
+  pipeline1:
+    - module: RSS::load
+      config:
+        url:
+          - http://www.fraction.jp/log/feed/rdf
+          - http://d.hatena.ne.jp/yuanying/rss
+          - http://yuanying.oeilvert.org/books.rss
+
+    - module: Filter::sort
+      config:
+        method: date
+
+    - module: reverse
+
+    - module: head
+      config:
+        n: 10
+
+    - module: RSS::save
+      config:
+        filename: feed.xml
+        link: http://www.fraction.jp/
+        title: BONNOH FRACTION
+  
+  pipeline2:
+    - module: Feed::pixiv_tag
+      config:
+        id: yuanying
+        password: kojiro
+        tag: C74
+
+    - module: RSS::save
+      config:
+        #filename: /Users/Shared/Sites/fraction/feed.xml
+        filename: pixiv.xml
+        link: http://www.pixiv.net/tags.php?tag=C74
+        title: Pixiv - C74

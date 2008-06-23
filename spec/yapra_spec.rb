@@ -2,10 +2,14 @@ require File.dirname(__FILE__) + '/spec_helper.rb'
 
 # Time to add your specs!
 # http://rspec.info/
-describe "Place your specs here" do
+describe Yapra do
   
-  it "find this spec in spec directory" do
-    violated "Be sure to write your specs"
+  it "load class constant from string." do
+    Yapra.load_class_constant('Yapra').should == Yapra
+  end
+  
+  it 'can\'t load constant from invalid name.' do
+    Yapra.load_class_constant('_arheiuhri_333***').should be_nil
   end
   
 end
