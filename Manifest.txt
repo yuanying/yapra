@@ -8,6 +8,9 @@ Rakefile
 bin/yapra
 config/hoe.rb
 config/requirements.rb
+fixtures/config/habu_like.yml
+fixtures/config/mixed_type.yml
+fixtures/config/pragger_like.yml
 legacy_plugins/Download/nicovideo.rb
 legacy_plugins/Feed/custom_feed.rb
 legacy_plugins/Feed/google_calendar.rb
@@ -59,6 +62,7 @@ lib-plugins/yapra/plugin/config/basic_auth.rb
 lib-plugins/yapra/plugin/config/web_post.rb
 lib-plugins/yapra/plugin/feed/custom.rb
 lib-plugins/yapra/plugin/feed/load.rb
+lib-plugins/yapra/plugin/filter/apply_template.rb
 lib-plugins/yapra/plugin/filter/entry_full_text.rb
 lib-plugins/yapra/plugin/publish/file_download.rb
 lib-plugins/yapra/plugin/publish/gmail.rb
@@ -83,6 +87,7 @@ lib/yapra/plugin/mechanize_base.rb
 lib/yapra/runtime.rb
 lib/yapra/version.rb
 plugins/Filter/deduped.rb
+plugins/Filter/grep.rb
 plugins/Filter/sort.rb
 plugins/Filter/subs.rb
 script/console
@@ -92,6 +97,7 @@ script/txt2html
 setup.rb
 spec/spec.opts
 spec/spec_helper.rb
+spec/yapra/config_spec.rb
 spec/yapra_spec.rb
 tasks/deployment.rake
 tasks/environment.rake

@@ -2,6 +2,7 @@
 
 * 1 bug fix:
   * Publish::Imap, mailbox select fixed.
+  * Spec files are added.
 
 * 2 majar enhancement:
   * A few plugins are added.
