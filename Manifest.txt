@@ -11,6 +11,7 @@ config/requirements.rb
 fixtures/config/habu_like.yml
 fixtures/config/mixed_type.yml
 fixtures/config/pragger_like.yml
+fixtures/legacy_plugin/legacy_test_plugin.rb
 legacy_plugins/Download/nicovideo.rb
 legacy_plugins/Feed/custom_feed.rb
 legacy_plugins/Feed/google_calendar.rb
@@ -98,6 +99,8 @@ setup.rb
 spec/spec.opts
 spec/spec_helper.rb
 spec/yapra/config_spec.rb
+spec/yapra/legacy_plugin/base_spec.rb
+spec/yapra/legacy_plugin/registry_factory_spec.rb
 spec/yapra_spec.rb
 tasks/deployment.rake
 tasks/environment.rake

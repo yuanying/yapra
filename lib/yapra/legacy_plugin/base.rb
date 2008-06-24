@@ -1,4 +1,5 @@
 # require 'pathname'
+require 'kconv'
 require 'yapra/legacy_plugin'
 
 class Yapra::LegacyPlugin::Base
