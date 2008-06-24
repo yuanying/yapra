@@ -34,9 +34,9 @@ module Yapra::Plugin::Filter
         end
 
         if regexp =~ url
+          logger.debug "Process: #{url}"
           page = agent.get(url)
           sleep wait
-          logger.info "Process: #{url}"
 
           unless(item.instance_of?(RSS::RDF::Item))
             new_item = RSS::RDF::Item.new

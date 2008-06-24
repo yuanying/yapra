@@ -41,7 +41,7 @@ module Yapra::Plugin::Publish
       to              = config['mail']['to']   || 'me@localhost'
       
       imap = create_imap server, port, usessl
-      logger.info(imap.greeting)
+      logger.debug(imap.greeting)
       
       imap.login(username, password)
       logger.info('imap login was succeed.')
@@ -57,7 +57,7 @@ module Yapra::Plugin::Publish
           to = apply_template(config['mail']['to_template'], binding)
         end
         subject = (subject_prefix + item.title).gsub(/\n/, '').chomp
-        logger.debug("try append item: #{date}")
+        logger.debug("try append item: #{subject}")
         boundary = "----_____====#{Time.now.to_i}--BOUDARY"
         attachments = create_attachments(item, config)
         imap.append(mailbox, apply_template(mail_template, binding), nil, date)

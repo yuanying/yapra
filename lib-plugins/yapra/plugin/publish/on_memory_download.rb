@@ -36,7 +36,7 @@ module Yapra::Plugin::Publish
         url = construct_data(config['url'], item, item.respond_to?('link') ? item.link : item)
 
         if regexp =~ url
-          logger.info "Download start: #{url}"
+          logger.debug "Download start: #{url}"
           referrer = construct_data(config['referrer'], item)
           download(item, url, referrer)
           sleep wait

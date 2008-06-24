@@ -20,6 +20,7 @@ module Yapra::Plugin::Feed
         end
       
       urls.each.do |url|
+        logger.debug("Process: #{url}")
         source = agent.get(url).body
         rss = nil
         begin
