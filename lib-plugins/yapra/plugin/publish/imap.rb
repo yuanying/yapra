@@ -56,6 +56,7 @@ module Yapra::Plugin::Publish
         if config['mail']['to_template']
           to = apply_template(config['mail']['to_template'], binding)
         end
+        subject = (subject_prefix + item.title).gsub(/\n/, '').chomp
         logger.debug("try append item: #{date}")
         boundary = "----_____====#{Time.now.to_i}--BOUDARY"
         attachments = create_attachments(item, config)
@@ -105,7 +106,7 @@ To: <%=encode_field(to) %>
 Date: <%=date.rfc2822 %>
 MIME-Version: 1.0
 X-Mailer: Yapra <%=Yapra::VERSION::STRING %>
-Subject: <%=encode_field(subject_prefix + item.title) %>
+Subject: <%=encode_field(subject) %>
 Content-Type: multipart/mixed; boundary="<%=boundary -%>"
 
 This is a multi-part message in MIME format.
