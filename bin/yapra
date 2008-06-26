@@ -18,11 +18,12 @@ legacy_plugin_directory_paths = [
   File.join(YAPRA_ROOT, 'plugins')
 ]
 
+require 'yapra/version'
 require 'yapra/runtime'
 require 'yapra/config'
 require 'yapra/legacy_plugin/registry_factory'
 
-Version       = '0.1.0'
+Version       = Yapra::VERSION::STRING
 mode          = 'compatible'
 config_files  = []#"config.yaml"
 loglebel      = nil
