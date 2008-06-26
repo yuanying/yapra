@@ -1,6 +1,7 @@
 = yapra
 
-* http://www.fraction.jp/trac/rana2/wiki/Yapra
+* http://yapra.rubyforge.org/
+* http://github.com/yuanying/yapra/tree/master
 
 == DESCRIPTION:
 

@@ -16,13 +16,13 @@ h2. The basics
 
 h2. Demonstration of usage
 
-h3. Use command
+h3. Use on command
 
 <pre syntax="ruby">yapra -c config_file.yml</pre>
 
 This command looks like "Pragger":http://pragger.ikejisoft.com/
 
-h3. Use your application
+h3. Use in your application
 
 <pre syntax="ruby">require 'yapra/runtime'
 require 'yapra/config'
@@ -43,7 +43,7 @@ h2. Forum
 h2. Build and test instructions
 
 <pre>cd yapra
-rake test
+rake spec
 rake install_gem</pre>
 
 
