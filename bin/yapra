@@ -50,17 +50,21 @@ config_files << 'config.yaml' if config_files.size == 0
 legacy_plugin_registry_factory = Yapra::LegacyPlugin::RegistryFactory.new(legacy_plugin_directory_paths, mode)
 
 config_files.each do |config_file|
-  config = YAML.load(File.read(config_file).toutf8.gsub(/base64::([\w+\/]+=*)/){ Base64.decode64($1) })
-  config = Yapra::Config.new(config)
-  config.env.update({
-    'log' => {
-      'level' => loglebel
-    }
-  }) if loglebel
-  Yapra::Runtime.logger = config.create_logger
-  yapra = Yapra::Runtime.new(
-    config.env,
-    legacy_plugin_registry_factory
-  )
-  yapra.execute(config.pipeline_commands)
+  begin
+    config = YAML.load(File.read(config_file).toutf8.gsub(/base64::([\w+\/]+=*)/){ Base64.decode64($1) })
+    config = Yapra::Config.new(config)
+    config.env.update({
+      'log' => {
+        'level' => loglebel
+      }
+    }) if loglebel
+    Yapra::Runtime.logger = config.create_logger
+    yapra = Yapra::Runtime.new(
+      config.env,
+      legacy_plugin_registry_factory
+    )
+    yapra.execute(config.pipeline_commands)
+  rescue => ex
+    Yapra::Runtime.logger.error(ex.message)
+  end
 end
