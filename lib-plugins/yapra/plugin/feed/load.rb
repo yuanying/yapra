@@ -19,14 +19,14 @@ module Yapra::Plugin::Feed
           [ config['url'] ]
         end
       
-      urls.each.do |url|
+      urls.each do |url|
         logger.debug("Process: #{url}")
         source = agent.get(url).body
         rss = nil
         begin
-          rss = RSS::Parser.parse(cont)
+          rss = RSS::Parser.parse(source)
         rescue
-          rss = RSS::Parser.parse(cont, false)
+          rss = RSS::Parser.parse(source, false)
         end
         rss.items.each do |item|
           data << item
