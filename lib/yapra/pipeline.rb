@@ -73,7 +73,7 @@ class Yapra::Pipeline
       plugin_class      = Yapra.load_class_constant(yapra_module_name)
       break if plugin_class
     end
-    raise LoadError unless plugin_class
+    raise LoadError.new("#{command['module']} module is not found.") unless plugin_class
     plugin                = plugin_class.new
     plugin.yapra          = yapra if plugin.respond_to?('yapra=')
     plugin.pipeline       = self  if plugin.respond_to?('pipeline=')
