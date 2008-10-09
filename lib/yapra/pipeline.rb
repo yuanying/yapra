@@ -41,8 +41,21 @@ class Yapra::Pipeline
   #       }
   #     ])
   def run pipeline_command, data=[]
-    pipeline_command.inject(data) do |data, command|
-      execute_plugin(command, data.clone)
+    plugins = []
+    begin
+      pipeline_command.inject(data) do |data, command|
+        executed_plugin = execute_plugin(command, data.clone)
+        plugins << executed_plugin if executed_plugin
+      end
+    rescue ex
+      plugins.each do |plugin|
+        begin
+          plugin.on_error(ex) if plugin.respond_to?('on_error')
+        rescue ex
+          self.logger.error("error is occured when error handling: #{ex.message}")
+        end
+      end
+      raise ex
     end
   end
   
@@ -63,6 +76,7 @@ class Yapra::Pipeline
   def run_legacy_plugin command, data
     self.logger.debug("evaluate plugin as legacy")
     legacy_plugin_registry.get(command['module'])._yapra_run_as_legacy_plugin(command['config'], data)
+    nil
   end
   
   def run_class_based_plugin command, data
@@ -76,6 +90,7 @@ class Yapra::Pipeline
     raise LoadError.new("#{command['module']} module is not found.") unless plugin_class
     plugin = initialize_plugin(plugin_class, command)
     plugin.run(data)
+    plugin
   end
   
   def initialize_plugin plugin_class, command

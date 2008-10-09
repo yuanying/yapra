@@ -24,7 +24,7 @@ end
 
 def deduped config, data
   cacheroot = Pathname(__FILE__).parent.parent.parent.realpath + 'cache'
-  cachepath = Pathname.new(config['path']) || root
+  cachepath = Pathname.new(config['path']) || cacheroot
   if cachepath.relative?
     cachepath = cacheroot + cachepath
   end
