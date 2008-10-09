@@ -50,6 +50,7 @@ module Yapra::Plugin::Filter
     end
     
     def on_error(ex)
+      logger.debug('error is occured.')
       FileUtils.rm(@cache_paths, {:force => true})
     end
   end
