@@ -1,3 +1,4 @@
+require 'logger'
 require 'yapra'
 require 'yapra/pipeline'
 require 'yapra/config'
@@ -43,6 +44,9 @@ class Yapra::Runtime
   end
   
   def self.logger
+    unless @@logger
+      @@logger = Logger.new(STDOUT)
+    end
     @@logger
   end
   
