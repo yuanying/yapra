@@ -47,12 +47,12 @@ class Yapra::Pipeline
         executed_plugin = execute_plugin(command, data.clone)
         plugins << executed_plugin if executed_plugin
       end
-    rescue ex
+    rescue => ex
       plugins.each do |plugin|
         begin
           plugin.on_error(ex) if plugin.respond_to?('on_error')
-        rescue ex
-          self.logger.error("error is occured when error handling: #{ex.message}")
+        rescue => exx
+          self.logger.error("error is occured when error handling: #{exx.message}")
         end
       end
       raise ex
