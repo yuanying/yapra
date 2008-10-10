@@ -1,14 +1,16 @@
 require 'yapra'
+require 'yapra/runtime'
 require 'yapra/inflector'
 require 'yapra/legacy_plugin/base'
 
 class Yapra::Pipeline
   attr_reader :yapra, :context
   attr_accessor :legacy_plugin_registry
+  attr_accessor :logger
   
   UPPER_CASE = /[A-Z]/
   
-  def initialize yapra, pipeline_name
+  def initialize pipeline_name, yapra=Yapra::Runtime.new
     @yapra              = yapra
     @context            = { 'pipeline_name' => pipeline_name }
     
@@ -16,7 +18,7 @@ class Yapra::Pipeline
   end
   
   def logger
-    Yapra::Runtime.logger
+    @logger || Yapra::Runtime.logger
   end
   
   # start pipeline from commands.

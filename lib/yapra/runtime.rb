@@ -37,7 +37,7 @@ class Yapra::Runtime
   # execute one pipeline.
   def execute_pipeline pipeline_name, command_array, data=[]
     self.class.logger.info("# pipeline '#{pipeline_name}' is started...")
-    pipeline = Yapra::Pipeline.new(self, pipeline_name)
+    pipeline = Yapra::Pipeline.new(pipeline_name, self)
     legacy_plugin_registory = legacy_plugin_registry_factory.create(pipeline) if legacy_plugin_registry_factory
     pipeline.run(command_array, data)
   end
