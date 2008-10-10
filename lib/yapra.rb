@@ -30,11 +30,7 @@ module Yapra
   # TODO create util class, and move this method.
   def load_class_constant module_name
     require Yapra::Inflector.underscore(module_name)
-    Yapra::Inflector.constantize(module_name)
-  rescue LoadError
-    nil
-  rescue NameError
-    nil
+    return Yapra::Inflector.constantize(module_name)
   end
 end
 require 'rss/1.0'

@@ -83,16 +83,33 @@ class Yapra::Pipeline
   
   def run_class_based_plugin command, data
     self.logger.debug("evaluate plugin as class based")
+    load_error_stack = []
     plugin_class = nil
     @module_name_prefix.each do |prefix|
       yapra_module_name = "#{prefix}#{command['module']}"
-      plugin_class      = Yapra.load_class_constant(yapra_module_name)
-      break if plugin_class
+      begin
+        plugin_class      = Yapra.load_class_constant(yapra_module_name)
+        break if plugin_class
+      rescue LoadError, NameError => ex
+        load_error_stack << ex
+      end
     end
-    raise LoadError.new("#{command['module']} module is not found.") unless plugin_class
+    raise_load_error(load_error_stack, command) unless plugin_class
+    
     plugin = initialize_plugin(plugin_class, command)
     plugin.run(data)
     plugin
+  end
+  
+  def raise_load_error load_error_stack, command
+    load_error = LoadError.new("#{command['module']} module is not found.")
+    backtrace = load_error.backtrace || []
+    load_error_stack.each do |e|
+      backtrace << "#{e.class.name} in '#{e.message}'"
+      backtrace = backtrace + e.backtrace
+    end
+    load_error.set_backtrace(backtrace)
+    raise load_error
   end
   
   def initialize_plugin plugin_class, command

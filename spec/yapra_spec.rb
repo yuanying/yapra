@@ -9,7 +9,9 @@ describe Yapra do
   end
   
   it 'can\'t load constant from invalid name.' do
-    Yapra.load_class_constant('_arheiuhri_333***').should be_nil
+    lambda {
+      Yapra.load_class_constant('_arheiuhri_333***').should be_nil
+    }.should raise_error(LoadError)
   end
   
 end

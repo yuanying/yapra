@@ -65,7 +65,9 @@ config_files.each do |config_file|
     )
     yapra.execute(config.pipeline_commands)
   rescue => ex
-    print ex
-    Yapra::Runtime.logger.error(ex.message)
+    STDERR.puts("#{ex.class.name} in '#{ex.message}'")
+    ex.backtrace.each do |t|
+      STDERR.puts(t)
+    end
   end
 end

@@ -22,6 +22,8 @@ class Yapra::Runtime
   attr_reader :env
   attr_reader :legacy_plugin_registry_factory
   
+  @@logger = Logger.new(STDOUT)
+  
   def initialize env={}, legacy_plugin_registry_factory=nil
     @env    = env
     
@@ -44,9 +46,6 @@ class Yapra::Runtime
   end
   
   def self.logger
-    unless @@logger
-      @@logger = Logger.new(STDOUT)
-    end
     @@logger
   end
   
