@@ -5,8 +5,8 @@ require 'yapra/legacy_plugin/base'
 
 class Yapra::Pipeline
   attr_reader :yapra, :context
+  attr_writer :logger
   attr_accessor :legacy_plugin_registry
-  attr_accessor :logger
   
   UPPER_CASE = /[A-Z]/
   

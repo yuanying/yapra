@@ -48,7 +48,7 @@ describe Yapra::Pipeline do
   
   it 'call on_error method of plugin, when Error has occured.' do
     Yapra::Plugin::Test::Test.should_receive(:new).and_return(@test_plugin)
-    @test_plugin.should_receive(:on_error).and_return(nil)
+    @test_plugin.should_receive(:on_error)
     lambda {
       @pipeline.run([
         {
