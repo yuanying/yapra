@@ -11,6 +11,7 @@ class Yapra::Pipeline
   UPPER_CASE = /[A-Z]/
   
   def initialize pipeline_name, yapra=Yapra::Runtime.new
+    @logger             = nil
     @yapra              = yapra
     @context            = { 'pipeline_name' => pipeline_name }
     
@@ -18,7 +19,7 @@ class Yapra::Pipeline
   end
   
   def logger
-    @logger || Yapra::Runtime.logger
+    return @logger || Yapra::Runtime.logger
   end
   
   # start pipeline from commands.
@@ -43,14 +44,13 @@ class Yapra::Pipeline
   #       }
   #     ])
   def run pipeline_command, data=[]
-    plugins = []
+    @plugins = []
     begin
       pipeline_command.inject(data) do |data, command|
-        executed_plugin = execute_plugin(command, data.clone)
-        plugins << executed_plugin if executed_plugin
+        execute_plugin(command, data.clone)
       end
     rescue => ex
-      plugins.each do |plugin|
+      @plugins.each do |plugin|
         begin
           plugin.on_error(ex) if plugin.respond_to?('on_error')
         rescue => exx
@@ -77,8 +77,8 @@ class Yapra::Pipeline
   
   def run_legacy_plugin command, data
     self.logger.debug("evaluate plugin as legacy")
-    legacy_plugin_registry.get(command['module'])._yapra_run_as_legacy_plugin(command['config'], data)
-    nil
+    data = legacy_plugin_registry.get(command['module'])._yapra_run_as_legacy_plugin(command['config'], data)
+    return data
   end
   
   def run_class_based_plugin command, data
@@ -97,8 +97,9 @@ class Yapra::Pipeline
     raise_load_error(load_error_stack, command) unless plugin_class
     
     plugin = initialize_plugin(plugin_class, command)
-    plugin.run(data)
-    plugin
+    @plugins << plugin
+    data = plugin.run(data)
+    return data
   end
   
   def raise_load_error load_error_stack, command

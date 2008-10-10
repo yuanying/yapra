@@ -13,7 +13,7 @@ module Yapra::Plugin::Filter
   #   config:
   #    path: /tmp/cache/hoge
   #
-  class Deduped
+  class Deduped < Yapra::Plugin::Base
     def run(data)
       cacheroot = Pathname.new(File.join(File.dirname(__FILE__), '..', '..', '..', '..', 'cache'))
       cachepath = Pathname.new(config['path']) || cacheroot
