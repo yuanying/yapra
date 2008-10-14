@@ -18,6 +18,10 @@ class Yapra::Pipeline
     @module_name_prefix = construct_module_name_prefix yapra.env
   end
   
+  def name
+    self.context[ 'pipeline_name' ]
+  end
+  
   def logger
     return @logger || Yapra::Runtime.logger
   end
