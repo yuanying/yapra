@@ -34,7 +34,7 @@ module Yapra::Plugin::Publish
         boundary = "----_____====#{Time.now.to_i}--BOUDARY"
         attachments = create_attachments(item, config)
         send_item(apply_template(mail_template, binding),
-                  {'date' => date, 'from' => from, 'to' => to})
+                  {'date' => date, 'from' => config['mail']['from'], 'to' => to})
 
         sleep config['wait']
       end
@@ -44,7 +44,7 @@ module Yapra::Plugin::Publish
     end
 
     protected
-    def prepare;
+    def prepare
       config['wait'] = config['wait'] || 1
     end
 
