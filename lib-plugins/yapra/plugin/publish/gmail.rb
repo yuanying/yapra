@@ -20,8 +20,11 @@ module Yapra::Plugin::Publish
   #
   class Gmail < Yapra::Plugin::Publish::Imap
     protected
-    def create_imap server, port, usessl
-      Net::IMAP.new('imap.gmail.com', 993, true)
+    def prepare
+      super
+      config['imap_server'] = 'imap.gmail.com'
+      config['port']        = 993
+      config['ssl']         = true
     end
   end
 end
