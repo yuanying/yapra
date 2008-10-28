@@ -69,7 +69,9 @@ lib-plugins/yapra/plugin/filter/entry_full_text.rb
 lib-plugins/yapra/plugin/publish/file_download.rb
 lib-plugins/yapra/plugin/publish/gmail.rb
 lib-plugins/yapra/plugin/publish/imap.rb
+lib-plugins/yapra/plugin/publish/mail.rb
 lib-plugins/yapra/plugin/publish/on_memory_download.rb
+lib-plugins/yapra/plugin/publish/smtp.rb
 lib-plugins/yapra/plugin/test/append_entry.rb
 lib-plugins/yapra/plugin/test/raise_error.rb
 lib-plugins/yapra/plugin/test/test.rb
