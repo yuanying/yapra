@@ -30,12 +30,19 @@ module Yapra::Plugin::Publish
     def prepare
       super
       config['helo'] = config['helo'] || 'localhost.localdomain'
-      if ( config['pop_server'] )
-        config['port']     = config['port']     || 25
-        config['authtype'] = config['authtype'] || 'pop'
+      if config['authtype']
+        if ( config['pop_server'] )
+          config['port']     = config['port']     || 25
+          config['authtype'] = config['authtype'] || 'pop'
+        else
+          config['port']     = config['port']     || 587
+          config['authtype'] = config['authtype'] || :plain
+        end
       else
-        config['port']     = config['port']     || 587
-        config['authtype'] = config['authtype'] || :plain
+        config['port']        = config['port'] || 25
+        config['pop_server']  = nil
+        config['username']    = nil
+        config['password']    = nil
       end
     end
 
@@ -62,7 +69,7 @@ module Yapra::Plugin::Publish
       @session.send_mail(msg, raw_mail_address(opt['from']), raw_mail_address(opt['to']))
     end
     
-    MAIL_ADDRESS_FORMAT = /<([0-9a-z!#\$%\&'\*\+\/\=\?\^\|\-\{\}\.]+@[0-9a-z!#\$%\&'\*\+\/\=\?\^\|\-\{\}\.]+)>/
+    MAIL_ADDRESS_FORMAT = /<([0-9a-z!#_\$%\&'\*\+\/\=\?\^\|\-\{\}\.]+@[0-9a-z!#_\$%\&'\*\+\/\=\?\^\|\-\{\}\.]+)>/
     def raw_mail_address address
       if MAIL_ADDRESS_FORMAT =~ address
         address = $1
