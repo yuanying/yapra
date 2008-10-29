@@ -14,8 +14,8 @@ module Yapra::Plugin::Publish
         config['mail'] = {}
       end
       subject_prefix  = config['mail']['subject_prefix'] || ''
-      from            = encode_field(config['mail']['from'] || 'yapra@localhost')
-      to              = encode_field(config['mail']['to']   || 'me@localhost')
+      from            = config['mail']['from'] || 'yapra@localhost'
+      to              = config['mail']['to']   || 'me@localhost'
 
       open_session
       
@@ -24,17 +24,17 @@ module Yapra::Plugin::Publish
         content = item.content_encoded || item.description || 'from Yapra.'
         content = [content].pack('m')
         if config['mail']['from_template']
-          from = encode_field(apply_template(config['mail']['from_template'], binding))
+          from = apply_template(config['mail']['from_template'], binding)
         end
         if config['mail']['to_template']
-          to = encode_field(apply_template(config['mail']['to_template'], binding))
+          to = apply_template(config['mail']['to_template'], binding)
         end
         subject = (subject_prefix + item.title).gsub(/\n/, '').chomp
         logger.debug("try append item: #{subject}")
         boundary = "----_____====#{Time.now.to_i}--BOUDARY"
         attachments = create_attachments(item, config)
         send_item(apply_template(mail_template, binding),
-                  {'date' => date, 'from' => config['mail']['from'], 'to' => to})
+                  {'date' => date, 'from' => from, 'to' => to})
 
         sleep config['wait']
       end
@@ -77,8 +77,8 @@ module Yapra::Plugin::Publish
     
     def mail_template
       return <<EOT
-From: <%=from %>
-To: <%=to %>
+From: <%=encode_field(from) %>
+To: <%=encode_field(to) %>
 Date: <%=date.rfc2822 %>
 MIME-Version: 1.0
 X-Mailer: Yapra <%=Yapra::VERSION::STRING %>

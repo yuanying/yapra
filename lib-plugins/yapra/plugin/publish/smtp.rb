@@ -59,7 +59,15 @@ module Yapra::Plugin::Publish
     end
 
     def send_item(msg, opt)
-      @session.send_mail(msg, opt['from'], opt['to'])
+      @session.send_mail(msg, raw_mail_address(opt['from']), raw_mail_address(opt['to']))
+    end
+    
+    MAIL_ADDRESS_FORMAT = /<([0-9a-z!#\$%\&'\*\+\/\=\?\^\|\-\{\}\.]+@[0-9a-z!#\$%\&'\*\+\/\=\?\^\|\-\{\}\.]+)>/
+    def raw_mail_address address
+      if MAIL_ADDRESS_FORMAT =~ address
+        address = $1
+      end
+      return address
     end
   end
 end
