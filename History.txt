@@ -4,6 +4,7 @@
 
 * 2 majar enhancement:
   * Publish::Mail plugin is added.
+  * Feed::Custom supports url list.
 
 == 0.1.2
 

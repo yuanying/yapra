@@ -20,24 +20,37 @@ module Yapra::Plugin::Feed
   #           content_encoded: '<div><%= title %></div>'
   class Custom < Yapra::Plugin::MechanizeBase
     def run(data)
-      page    = agent.get(config['url'])
-      root    = page.root
-      
+      urls = 
+        if config['url'].kind_of?(Array)
+          config['url']
+        else
+          [ config['url'] ]
+        end
       xconfig = config['extract_xpath']
+      wait    = config['wait'] || 1
+      capture = xconfig['capture']
+      split   = xconfig['split']
       
-      if xconfig['capture']
-        root = root.at(xconfig['capture'])
-      end
-      split = xconfig['split']
       xconfig.delete('capture')
       xconfig.delete('split')
       
-      root.search(split).each do |element|
-        item = RSS::RDF::Item.new
-        
-        extract_attribute_from element, item
+      urls.each do |url|
+        logger.debug("Process: #{url}")
+        page    = agent.get(url)
+        root    = page.root
 
-        data << item
+        if capture
+          root = root.at(capture)
+        end
+
+        root.search(split).each do |element|
+          item = RSS::RDF::Item.new
+
+          extract_attribute_from element, item
+
+          data << item
+        end
+        sleep wait
       end
       
       data
