@@ -3,28 +3,10 @@ require 'yapra/runtime'
 require 'yapra/inflector'
 require 'yapra/legacy_plugin/base'
 
-class Yapra::Pipeline
-  attr_reader :yapra, :context
-  attr_writer :logger
+class Yapra::Pipeline < Yapra::PipelineBase
   attr_accessor :legacy_plugin_registry
   
   UPPER_CASE = /[A-Z]/
-  
-  def initialize pipeline_name, yapra=Yapra::Runtime.new
-    @logger             = nil
-    @yapra              = yapra
-    @context            = { 'pipeline_name' => pipeline_name }
-    
-    @module_name_prefix = construct_module_name_prefix yapra.env
-  end
-  
-  def name
-    self.context[ 'pipeline_name' ]
-  end
-  
-  def logger
-    return @logger || Yapra::Runtime.logger
-  end
   
   # start pipeline from commands.
   # 
@@ -87,20 +69,11 @@ class Yapra::Pipeline
   
   def run_class_based_plugin command, data
     self.logger.debug("evaluate plugin as class based")
-    load_error_stack = []
-    plugin_class = nil
-    @module_name_prefix.each do |prefix|
-      yapra_module_name = "#{prefix}#{command['module']}"
-      begin
-        plugin_class      = Yapra.load_class_constant(yapra_module_name)
-        break if plugin_class
-      rescue LoadError, NameError => ex
-        load_error_stack << ex
-      end
-    end
-    raise_load_error(load_error_stack, command) unless plugin_class
+    plugin = load(command['module'])
     
-    plugin = initialize_plugin(plugin_class, command)
+    # yml pipeline specific.
+    plugin.plugin_config  = command['config'] if plugin.respond_to?('plugin_config=')
+    
     @plugins << plugin
     data = plugin.run(data)
     return data
@@ -115,25 +88,5 @@ class Yapra::Pipeline
     end
     load_error.set_backtrace(backtrace)
     raise load_error
-  end
-  
-  def initialize_plugin plugin_class, command
-    plugin                = plugin_class.new
-    plugin.yapra          = yapra if plugin.respond_to?('yapra=')
-    plugin.pipeline       = self  if plugin.respond_to?('pipeline=')
-    plugin.plugin_config  = command['config'] if plugin.respond_to?('plugin_config=')
-    plugin
-  end
-  
-  def construct_module_name_prefix env
-    module_name_prefix = [ 'Yapra::Plugin::', '' ]
-    if env['module_name_prefix']
-      if env['module_name_prefix'].kind_of?(Array)
-        module_name_prefix = env['module_name_prefix']
-      else
-        module_name_prefix = [ env['module_name_prefix'] ]
-      end
-    end
-    module_name_prefix
   end
 end
