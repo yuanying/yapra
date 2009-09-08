@@ -1,4 +1,5 @@
 require 'yapra'
+require 'yapra/pipeline_base'
 require 'yapra/runtime'
 require 'yapra/inflector'
 require 'yapra/legacy_plugin/base'
