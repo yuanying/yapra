@@ -1,5 +1,5 @@
 #--
-# Copyright (c) 2008 fraction.jp. Yuanying, Some rights reserved.
+# Copyright (c) 2008 Yuanying Ohtsuka
 # Original from 2008-06-12 http://pragger.ikejisoft.com/
 #
 # Permission is hereby granted, free of charge, to any person obtaining
