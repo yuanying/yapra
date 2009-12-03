@@ -1,0 +1,29 @@
+
+= yapra-new
+
+
+== Description
+
+
+== Installation
+
+=== Archive Installation
+
+	rake install
+
+=== Gem Installation
+
+	gem install yapranew
+
+
+== Features/Problems
+
+
+== Synopsis
+
+
+== Copyright
+
+Author::    yuanying <yuanying@>
+Copyright:: Copyright (c) 2009 yuanying
+License::   
