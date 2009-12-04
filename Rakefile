@@ -21,7 +21,7 @@ BIN_FILES         = %w( yapra )
 VERS              = Yapra::VERSION::STRING
 
 REV = File.read(".svn/entries")[/committed-rev="(d+)"/, 1] rescue nil
-CLEAN.include ['**/.*.sw?', '*.gem', '.config']
+CLEAN.include ['**/.*.sw?', '*.gem', '.config' ,'pkg']
 RDOC_OPTS = [
   '--title', "#{NAME} documentation",
   "--charset", "utf-8",
@@ -59,7 +59,7 @@ spec = Gem::Specification.new do |s|
   #s.required_ruby_version = '>= 1.8.2'
 
   s.files = %w(README.mdown ChangeLog Rakefile LICENCE) +
-    Dir.glob("{bin,doc,fixtures,lib,lib-plugins,plugins,spec,tasks,website,script}/**/*") + 
+    Dir.glob("{bin,doc,fixtures,legacy_plugins,lib,lib-plugins,plugins,spec,tasks,website,script}/**/*") + 
     # Dir.glob("ext/**/*.{h,c,rb}") +
     # Dir.glob("examples/**/*.rb") +
     # Dir.glob("tools/*.rb")

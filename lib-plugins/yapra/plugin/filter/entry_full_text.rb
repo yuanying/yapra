@@ -47,7 +47,7 @@ module Yapra::Plugin::Filter
             item = new_item
           end
 
-          extract_attribute_from page.root, item
+          extract_attribute_from page.root, item, binding
 
         end
         item

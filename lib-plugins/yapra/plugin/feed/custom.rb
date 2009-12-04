@@ -46,7 +46,7 @@ module Yapra::Plugin::Feed
         root.search(split).each do |element|
           item = RSS::RDF::Item.new
 
-          extract_attribute_from element, item
+          extract_attribute_from element, item, binding
 
           data << item
         end

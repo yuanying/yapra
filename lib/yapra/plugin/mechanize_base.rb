@@ -8,7 +8,7 @@ class Yapra::Plugin::MechanizeBase < Yapra::Plugin::Base
     pipeline.context['mechanize_agent']
   end
   
-  def extract_attribute_from element, item
+  def extract_attribute_from element, item, binding=nil
     if plugin_config['extract_xpath']
       plugin_config['extract_xpath'].each do |k, v|
         value = nil
