@@ -1,4 +1,4 @@
-$:.unshift('.')
+$:.unshift('lib')
 require 'rubygems'
 require 'rake'
 require 'rake/clean'
