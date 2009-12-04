@@ -23,11 +23,13 @@ require 'yapra/runtime'
 require 'yapra/config'
 require 'yapra/legacy_plugin/registry_factory'
 
-Version       = Yapra::VERSION::STRING
 mode          = 'compatible'
 config_files  = []#"config.yaml"
 loglebel      = nil
+
 opt = OptionParser.new
+opt.version = Yapra::VERSION::STRING
+opt.release = nil
 opt.on("-c", "--configfile CONFIGFILE") {|v| config_files << v }
 opt.on("-d", "--configfile-directory CONFIGFILE_DIRECTORY") { |v|
   Dir.glob(File.join(v, '**/*.yml')).each do |file|
