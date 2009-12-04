@@ -1,3 +1,4 @@
+$:.unshift('.')
 require 'rubygems'
 require 'rake'
 require 'rake/clean'
@@ -10,7 +11,6 @@ require 'rake/contrib/sshpublisher'
 require 'fileutils'
 require 'yapra/version'
 include FileUtils
-
 NAME              = "yapra"
 AUTHOR            = "yuanying"
 EMAIL             = "yuanying at fraction dot jp"
@@ -58,7 +58,7 @@ spec = Gem::Specification.new do |s|
   s.add_dependency('mechanize', '>=0.7.6')
   #s.required_ruby_version = '>= 1.8.2'
 
-  s.files = %w(README.mdown ChangeLog Rakefile LICENSE) +
+  s.files = %w(README.mdown ChangeLog Rakefile LICENCE) +
     Dir.glob("{bin,doc,fixtures,lib,lib-plugins,plugins,spec,tasks,website,script}/**/*") + 
     # Dir.glob("ext/**/*.{h,c,rb}") +
     # Dir.glob("examples/**/*.rb") +
@@ -103,20 +103,11 @@ task :rubyforge => [:rdoc, :package] do
   Rake::RubyForgePublisher.new(RUBYFORGE_PROJECT, 'yuanying').upload
 end
 
-desc 'Package and upload the release to rubyforge.'
+desc 'Package and upload the release to gemcutter.'
 task :release => [:clean, :package] do |t|
   v = ENV["VERSION"] or abort "Must supply VERSION=x.y.z"
   abort "Versions don't match #{v} vs #{VERS}" unless v == VERS
   pkg = "pkg/#{NAME}-#{VERS}"
-
-  rf = RubyForge.new
-  puts "Logging in"
-  rf.login
-
-  c = rf.userconfig
-#  c["release_notes"] = description if description
-#  c["release_changes"] = changes if changes
-  c["preformatted"] = true
 
   files = [
     "#{pkg}.tgz",
@@ -124,5 +115,5 @@ task :release => [:clean, :package] do |t|
   ].compact
 
   puts "Releasing #{NAME} v. #{VERS}"
-  rf.add_release RUBYFORGE_PROJECT, NAME, VERS, *files
+  sh %{gem push #{pkg}.gem}
 end
