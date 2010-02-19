@@ -61,15 +61,16 @@ module Yapra::Plugin::Publish
     end
     
     def create_attachments item, config
+      mechanize_file_type = defined?(Mechanize) ? Mechanize::File : WWW::Mechanize::File
       attachments = []
       attachment_attributes = config['mail']['attachments']
       if attachment_attributes.kind_of?(String)
         file = item.__send__(attachment_attributes)
-        attachments << file if file.kind_of?(WWW::Mechanize::File)
+        attachments << file if file.kind_of?(mechanize_file_type)
       elsif attachment_attributes.kind_of?(Array)
         attachment_attributes.each do |atc|
           file = item.__send__(atc)
-          attachments << file if file.kind_of?(WWW::Mechanize::File)
+          attachments << file if file.kind_of?(mechanize_file_type)
         end
       end
       attachments

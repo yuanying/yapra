@@ -13,7 +13,7 @@ class HatenaDiaryWriter
   def initialize(id,password)
     @id = id
     @password = password
-    @agent = WWW::Mechanize.new
+    @agent = defined?(Mechanize) ? Mechanize.new : WWW::Mechanize.new
     if proxy = ENV['HTTP_PROXY']
       proxy = URI.parse(proxy)
       @agent.set_proxy(proxy.host, proxy.port)

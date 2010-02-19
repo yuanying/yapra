@@ -31,7 +31,7 @@ class MixiDiaryWriter
     @id = nil
     @username = username
     @password = password
-    @agent = WWW::Mechanize.new
+    @agent = defined?(Mechanize) ? Mechanize.new : WWW::Mechanize.new
   end
 
   def login username=@username, password=@password

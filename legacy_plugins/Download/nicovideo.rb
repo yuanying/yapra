@@ -13,7 +13,7 @@ require 'cgi'
 
 def nicovideo(config,data)
   auth = YAML.load( File.read( config['authfile'] ) )
-  agent = WWW::Mechanize.new
+  agent = defined?(Mechanize) ? Mechanize.new : WWW::Mechanize.new
   
   page = agent.post("https://secure.nicovideo.jp/secure/login?site=niconico",
       {"mail"=>auth["mail"],"password"=>auth["password"]})

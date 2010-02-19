@@ -23,7 +23,7 @@ def yahoo(config, data)
   
   data.collect {|d|
     if d && d =~ /\S/
-      agent = WWW::Mechanize.new
+      agent = defined?(Mechanize) ? Mechanize.new : WWW::Mechanize.new
       start = agent.get("http://honyaku.yahoo.co.jp/")
       form = start.forms.last
       

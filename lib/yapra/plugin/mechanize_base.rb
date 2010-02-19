@@ -4,7 +4,7 @@ require 'yapra/plugin/base'
 
 class Yapra::Plugin::MechanizeBase < Yapra::Plugin::Base
   def agent
-    pipeline.context['mechanize_agent'] ||= WWW::Mechanize.new
+    pipeline.context['mechanize_agent'] ||= (defined?(Mechanize) ? Mechanize.new : WWW::Mechanize.new)
     pipeline.context['mechanize_agent']
   end
   

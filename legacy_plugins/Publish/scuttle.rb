@@ -19,7 +19,7 @@ class Scuttle
     @post_url = url + 'api/posts/add?'
     @username = username
     @password = password
-    @agent    = WWW::Mechanize.new
+    @agent    = defined?(Mechanize) ? Mechanize.new : WWW::Mechanize.new
     @agent.basic_auth(@username, @password)
     if proxy && proxy.is_a?(Hash) && proxy['proxy_addr'] && proxy['proxy_port']
       @agent.set_proxy(proxy['proxy_addr'], proxy['proxy_port'],
