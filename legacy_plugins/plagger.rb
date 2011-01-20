@@ -79,8 +79,8 @@ end
 def input_option(config)
   opt = config.has_key?("input") ? config["input"] : "nothing"
   case opt
-  when "feed": :feed
-  when "nothing": :nothing
+  when "feed" then :feed
+  when "nothing" then :nothing
   else
     :nothing
   end

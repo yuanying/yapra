@@ -10,7 +10,7 @@ class Yapra::LegacyPlugin::Base
   def initialize(pipeline, plugin_path)
     @_yapra_pipeline     = pipeline
     @_yapra_run_method  = File.basename(plugin_path, '.*')
-    instance_eval( @source = File.read(plugin_path).toutf8, plugin_path, 1)
+    instance_eval( @source = File.read(plugin_path).toutf8, plugin_path.to_s, 1)
   end
   
   def logger
