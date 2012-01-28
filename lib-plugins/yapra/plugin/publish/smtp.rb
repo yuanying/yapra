@@ -4,7 +4,7 @@ require 'yapra/plugin/publish/mail'
 
 module Yapra::Plugin::Publish
   # = module: Publish::Smtp -- wtnabe
-  # 
+  #
   # sending each entry via smtp.
   #
   # example:
@@ -68,7 +68,7 @@ module Yapra::Plugin::Publish
     def send_item(msg, opt)
       @session.send_mail(msg, raw_mail_address(opt['from']), raw_mail_address(opt['to']))
     end
-    
+
     MAIL_ADDRESS_FORMAT = /<([0-9a-z!#_\$%\&'\*\+\/\=\?\^\|\-\{\}\.]+@[0-9a-z!#_\$%\&'\*\+\/\=\?\^\|\-\{\}\.]+)>/
     def raw_mail_address address
       if MAIL_ADDRESS_FORMAT =~ address

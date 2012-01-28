@@ -1,5 +1,5 @@
 ## Filter::deduped - Plugin to get Deduped entries -- emergent
-## 
+##
 ## Plugin to get Deduped entries
 ## Cache path can be set.
 ##
@@ -38,9 +38,9 @@ def deduped config, data
       return data
     end
   end
-  
+
   attribute = config['attribute']
-  
+
   deduped_data = data.select {|d|
     v = d.link rescue d.to_s
     if attribute && d.respond_to?(attribute)
@@ -49,7 +49,7 @@ def deduped config, data
     hashpath = cachepath.to_s + '/' + Digest::MD5.hexdigest(v)
     if File.exists?(hashpath)
       false
-    else 
+    else
       File.open(hashpath, "wb").write(v) rescue false
     end
   }

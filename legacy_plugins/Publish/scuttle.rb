@@ -29,7 +29,7 @@ class Scuttle
 
   def post url, desc, option=nil
     params = {}
-    
+
     params[:url] = url
     params[:description] = desc
 
@@ -66,7 +66,7 @@ def scuttle config, data
 
   data.each {|entry|
     print 'posting ' + entry.title + ': '
-    
+
     tags = get_tags entry
     if config['opt_tag']
       tags = [tags, config['opt_tag']].select{|t| t.length > 0}.join(' ')
@@ -78,7 +78,7 @@ def scuttle config, data
       agent = Scuttle.new(config['url'], config['username'], config['password'])
       res = agent.post(entry.link, entry.title,
                        'tags' => tags, 'summary' => summary)
-                       
+
       if res then puts 'done' else puts 'failed' end
     rescue
       puts 'exception'

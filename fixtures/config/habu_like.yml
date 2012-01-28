@@ -2,7 +2,7 @@ global:
   log:
     out: stderr
     level: debug
-      
+
 pipeline:
   pipeline1:
     - module: RSS::load
@@ -27,7 +27,7 @@ pipeline:
         filename: feed.xml
         link: http://www.fraction.jp/
         title: BONNOH FRACTION
-  
+
   pipeline2:
     - module: Feed::pixiv_tag
       config:

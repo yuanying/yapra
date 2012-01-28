@@ -20,16 +20,16 @@ def yahoo(config, data)
           else
             return data
           end
-  
+
   data.collect {|d|
     if d && d =~ /\S/
       agent = defined?(Mechanize) ? Mechanize.new : WWW::Mechanize.new
       start = agent.get("http://honyaku.yahoo.co.jp/")
       form = start.forms.last
-      
+
       form.radiobuttons.each {|radio| radio.checked = (radio.value =~ /#{trans}/) ? true : false }
       form.fields.name("text").first.value = d
-      
+
       result = agent.submit(form)
       result.forms.name("textFormEntry").fields.name("trn_text").value
     else

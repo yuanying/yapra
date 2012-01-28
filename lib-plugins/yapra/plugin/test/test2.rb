@@ -6,7 +6,7 @@ module Yapra::Plugin::Test
       logger.debug 'test2!!'
       data
     end
-    
+
     def on_error(ex)
       logger.debug 'on error2!!'
     end

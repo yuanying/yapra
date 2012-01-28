@@ -27,7 +27,7 @@ def hatena_bookmark(config, data)
   data.each {|entry|
     puts 'posting ' + entry.title + ': '
 
-    tags = entry.dc_subjects.map do |s| s.content end.join(' ') rescue ''    
+    tags = entry.dc_subjects.map do |s| s.content end.join(' ') rescue ''
     if config['opt_tag']
       tags = [tags, config['opt_tag']].select{|t| t.length > 0}.join(' ')
     end
@@ -36,7 +36,7 @@ def hatena_bookmark(config, data)
 
     hbm.post(
              :title => entry.title,
-             :link  => entry.link, 
+             :link  => entry.link,
              :tags  => tags,
              :summary => summary
              )

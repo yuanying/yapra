@@ -4,7 +4,7 @@
 ##
 ## example
 ## - module: Feed::load_lirs
-##   config: 
+##   config:
 ##     url: http://example.com/hoge.lirs.gz
 ##
 

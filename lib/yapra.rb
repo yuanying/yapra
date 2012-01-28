@@ -26,7 +26,7 @@ $:.unshift(File.dirname(__FILE__)) unless
 
 module Yapra
   extend self
-  
+
   # TODO create util class, and move this method.
   def load_class_constant module_name
     require Yapra::Inflector.underscore(module_name)

@@ -18,7 +18,7 @@ module Yapra::Plugin::Publish
       to              = config['mail']['to']   || 'me@localhost'
 
       open_session
-      
+
       data.each do |item|
         date = item.date || item.dc_date || Time.now
         content = item.content_encoded || item.description || 'from Yapra.'
@@ -39,7 +39,7 @@ module Yapra::Plugin::Publish
         sleep config['wait']
       end
       close_session
-      
+
       data
     end
 
@@ -59,7 +59,7 @@ module Yapra::Plugin::Publish
         }.join("\n ")
       }
     end
-    
+
     def create_attachments item, config
       mechanize_file_type = defined?(Mechanize) ? Mechanize::File : WWW::Mechanize::File
       attachments = []
@@ -75,7 +75,7 @@ module Yapra::Plugin::Publish
       end
       attachments
     end
-    
+
     def mail_template
       return <<EOT
 From: <%=encode_field(from) %>

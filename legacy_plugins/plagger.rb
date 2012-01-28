@@ -13,9 +13,9 @@
 ##     input: feed
 ##     debug: false
 ##     dir: /var
-##     plugins: 
+##     plugins:
 ##       - module: Publish::CSV
-##         config: 
+##         config:
 ##           dir: /var
 ##           filename: a.csv
 
@@ -31,22 +31,22 @@ raise LoadError unless ENV['PATH'].split(Config::CONFIG['PATH_SEPARATOR']).find 
 
 def plagger(config, data)
   pla_con = config["plugins"]
-  
+
   if input_option(config) == :feed
     pla_con = [{"module" => "Subscription::Feed", "config"=>{ "url" => "file:#{pla_input(config)}" }}] + pla_con
     eval_pragger([{"module" => "save_rss", "config" => { "filename" => pla_input(config).to_s }}], data)
   end
-  
+
   pla_con.push({"module" => "Publish::Feed",
                  "config" =>
                  {"dir" => "/var",
                    "format" => "RSS",
                    "filename" => pla_output(config).basename.to_s}})
-  
+
   pla_config(config).open("w") {|io| io.write to_plagger_yaml(YAML.dump({ "plugins" => pla_con })) }
-  
+
   system "plagger -c #{pla_config(config)}"
-  
+
   begin
     RSS::Parser.parse(pla_output(config).read).items
   rescue

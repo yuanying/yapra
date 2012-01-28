@@ -27,7 +27,7 @@ class Delicious
   def post url, desc, option=nil
     params = {}
     post_url = 'https://api.del.icio.us/v1/posts/add?'
-    
+
     params[:url] = url
     params[:description] = desc
 
@@ -65,7 +65,7 @@ def delicious config, data
 
   data.each {|entry|
     print 'posting ' + entry.title + ': '
-    
+
     tags = get_tags entry
     if config['opt_tag']
       tags = [tags, config['opt_tag']].select{|t| t.length > 0}.join(' ')
@@ -77,7 +77,7 @@ def delicious config, data
       agent = Delicious.new(config['username'], config['password'])
       res = agent.post(entry.link, entry.title,
                        'tags' => tags, 'summary' => summary)
-                       
+
       if res then puts 'done' else puts 'failed' end
     rescue
       puts 'exception'

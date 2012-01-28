@@ -4,7 +4,7 @@ require 'yapra'
 # = Config Examples
 #
 # Config file for yapra.
-# 
+#
 # == Format 1: Pragger like.
 # A simplest. You can run one pipeline without global config.
 #
@@ -62,7 +62,7 @@ require 'yapra'
 class Yapra::Config
   attr_reader :env
   attr_reader :pipeline_commands
-  
+
   def initialize config={}
     if config.kind_of?(Hash)
       @env = config['global'] || {}
@@ -81,7 +81,7 @@ class Yapra::Config
       raise 'config file is invalid!'
     end
   end
-  
+
   def create_logger
     logger = nil
     if env['log'] && env['log']['out']
@@ -93,7 +93,7 @@ class Yapra::Config
     else
       logger = Logger.new(STDOUT)
     end
-    
+
     if env['log'] && env['log']['level']
       logger.level = Yapra::Inflector.constantize("Logger::#{env['log']['level'].upcase}")
     else
@@ -101,5 +101,5 @@ class Yapra::Config
     end
     logger
   end
-  
+
 end

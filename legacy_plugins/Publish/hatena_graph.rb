@@ -1,7 +1,7 @@
 ## Post data to Hatena Graph -- takatoh
-## 
+##
 ## hatenaapigraph 0.2.1 is required.
-## 
+##
 ## - module: Publish::hatena_graph
 ##   config:
 ##     user_id: your-hatena-user-id

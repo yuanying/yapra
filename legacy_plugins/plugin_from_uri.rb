@@ -16,16 +16,16 @@ require 'uri'
 def plugin_from_uri(config, data)
   uri = URI(config["uri"])
   name = config["name"] || uri.path.split("/").last.gsub(/\..*$/,'')
-  
+
   body = open(uri.to_s) {|io| io.read}
-  
+
   plugin = Class.new(Plugin)
   plugin.class_eval {
     def initialize()
     end
   }
   plugin.class_eval(body, uri.to_s, 1)
-  
+
   plugin.new().send(name, config["config"], data)
 end
 

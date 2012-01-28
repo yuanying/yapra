@@ -5,7 +5,7 @@ require 'digest/md5'
 
 module Yapra::Plugin::Filter
   # Filter::Deduped - Plugin to get Deduped entries -- original by emergent
-  # 
+  #
   # Plugin to get Deduped entries
   # Cache path can be set.
   #
@@ -20,13 +20,13 @@ module Yapra::Plugin::Filter
       if cachepath.relative?
         cachepath = cacheroot + cachepath
       end
-      
+
       unless File.exists?(cachepath)
         FileUtils.mkdir_p(cachepath)
       end
-      
+
       attribute = config['attribute']
-      
+
       @cache_paths = []
       deduped_data = data.select {|d|
         v = d.link rescue d.to_s
@@ -41,14 +41,14 @@ module Yapra::Plugin::Filter
             File.open(hashpath, "wb").write(v)
             @cache_paths << hashpath
             true
-          rescue 
+          rescue
             false
           end
         end
       }
       return deduped_data
     end
-    
+
     def on_error(ex)
       logger.debug('error is occured.')
       FileUtils.rm(@cache_paths, {:force => true})
