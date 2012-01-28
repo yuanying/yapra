@@ -43,7 +43,7 @@ class HatenaDiaryWriter
 end
 
 def hatena_diary_writer(config, data)
-  diary = HatenaDiaryWriter.new(config['user_id'], config['password']) 
+  diary = HatenaDiaryWriter.new(config['user_id'], config['password'])
   content = ''
   data.each do |line|
     content << ("* "+line.title+"\n"+line.link+"\n"+line.description rescue line.to_s)

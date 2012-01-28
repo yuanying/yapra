@@ -2,7 +2,7 @@ global:
   log:
     out: stderr
     level: debug
-      
+
 pipeline:
   - module: Feed::pixiv_tag
     config:

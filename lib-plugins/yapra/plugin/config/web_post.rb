@@ -2,9 +2,9 @@ require 'yapra/plugin/mechanize_base'
 
 module Yapra::Plugin::Config
   # Config::WebPost -- Yuanying
-  # 
+  #
   #     post to web page with WWW::Mechanize agent.
-  # 
+  #
   #     - module: Config::WebPost
   #       config:
   #         url: http://www.pixiv.net/index.php

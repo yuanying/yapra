@@ -2,11 +2,11 @@ require 'yapra/plugin/base'
 
 module Yapra::Plugin::Filter
   # = Filter::ApplyTemplate -- Yuanying
-  # 
+  #
   # apply template and set to attribute.
   #
   # example:
-  # 
+  #
   #     - module: Filter::ApplyTemplate
   #       config:
   #         content_encoded: '<div><%= title %></div>'
@@ -19,7 +19,7 @@ module Yapra::Plugin::Filter
       else
         regexp = /^(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)$/
       end
-      
+
       data.map! do |item|
         url = item
         if item.respond_to?('link')
@@ -35,7 +35,7 @@ module Yapra::Plugin::Filter
             new_item.link = item.link rescue '#'
             item = new_item
           end
-          
+
           if plugin_config
             plugin_config.each do |k, template|
               value = apply_template template, binding
@@ -45,7 +45,7 @@ module Yapra::Plugin::Filter
         end
         item
       end
-      
+
       data
     end
   end

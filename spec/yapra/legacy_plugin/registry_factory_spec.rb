@@ -6,12 +6,12 @@ describe Yapra::LegacyPlugin::RegistryFactory do
   before do
     @pipeline = mock('pipeline', :null_object => true)
   end
-  
+
   it 'should create advance mode registry from string "advance"' do
     factory = Yapra::LegacyPlugin::RegistryFactory.new([], 'advance')
     factory.create(@pipeline).class.should == Yapra::LegacyPlugin::AdvanceModeRegistry
   end
-  
+
   it 'should create compatible mode registry from string "compatible"' do
     factory = Yapra::LegacyPlugin::RegistryFactory.new([], 'compatible')
     factory.create(@pipeline).class.should == Yapra::LegacyPlugin::CompatibleModeRegistry

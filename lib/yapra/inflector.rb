@@ -4,7 +4,7 @@ require 'yapra'
 
 module Yapra::Inflector
   extend self
-  
+
   # By default, camelize converts strings to UpperCamelCase. If the argument to camelize
   # is set to ":lower" then camelize produces lowerCamelCase.
   #
@@ -22,7 +22,7 @@ module Yapra::Inflector
       lower_case_and_underscored_word.first + camelize(lower_case_and_underscored_word)[1..-1]
     end
   end
-  
+
   # The reverse of +camelize+. Makes an underscored form from the expression in the string.
   #
   # Changes '::' to '/' to convert namespaces to paths.
@@ -37,7 +37,7 @@ module Yapra::Inflector
       tr("-", "_").
       downcase
   end
-  
+
   # Constantize tries to find a declared constant with the name specified
   # in the string. It raises a NameError when the name is not in CamelCase
   # or is not initialized.

@@ -7,7 +7,7 @@ describe Yapra::Pipeline do
     @pipeline     = Yapra::Pipeline.new('spec test')
     @test_plugin  = Yapra::Plugin::Test::Test.new
   end
-  
+
   it 'execute pipeline from commands.' do
     @pipeline.run([
       {
@@ -15,7 +15,7 @@ describe Yapra::Pipeline do
       }
     ])
   end
-  
+
   it 'call run method of plugin, when pipeline is running.' do
     data = []
     Yapra::Plugin::Test::Test.should_receive(:new).and_return(@test_plugin)
@@ -26,7 +26,7 @@ describe Yapra::Pipeline do
       }
     ], data)
   end
-  
+
   it 'transfer previous plugin return object to next plugin.' do
     require 'yapra/plugin/test/test2'
     @test_plugin2  = Yapra::Plugin::Test::Test2.new
@@ -45,7 +45,7 @@ describe Yapra::Pipeline do
       }
     ], data)
   end
-  
+
   it 'call on_error method of plugin, when Error has occured.' do
     Yapra::Plugin::Test::Test.should_receive(:new).and_return(@test_plugin)
     @test_plugin.should_receive(:on_error)

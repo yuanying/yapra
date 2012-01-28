@@ -6,7 +6,7 @@ module Yapra::Plugin::Test
       puts 'test!!'
       data
     end
-    
+
     def on_error(ex)
       puts 'on error!!'
     end

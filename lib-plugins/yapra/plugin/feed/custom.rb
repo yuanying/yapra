@@ -2,11 +2,11 @@ require 'yapra/plugin/mechanize_base'
 
 module Yapra::Plugin::Feed
   # = Feed::Custom
-  # 
+  #
   # generate rss feed from web page.
-  # 
+  #
   # example:
-  # 
+  #
   #     - module: Feed::Custom
   #       config:
   #         url: 'http://www.fraction.jp/'
@@ -20,7 +20,7 @@ module Yapra::Plugin::Feed
   #           content_encoded: '<div><%= title %></div>'
   class Custom < Yapra::Plugin::MechanizeBase
     def run(data)
-      urls = 
+      urls =
         if config['url'].kind_of?(Array)
           config['url']
         else
@@ -30,10 +30,10 @@ module Yapra::Plugin::Feed
       wait    = config['wait'] || 1
       capture = xconfig['capture']
       split   = xconfig['split']
-      
+
       xconfig.delete('capture')
       xconfig.delete('split')
-      
+
       urls.each do |url|
         logger.debug("Process: #{url}")
         page    = agent.get(url)
@@ -52,7 +52,7 @@ module Yapra::Plugin::Feed
         end
         sleep wait
       end
-      
+
       data
     end
   end

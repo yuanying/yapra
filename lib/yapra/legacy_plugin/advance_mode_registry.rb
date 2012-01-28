@@ -9,7 +9,7 @@ module Yapra::LegacyPlugin
     attr_accessor :legacy_plugins
     attr_accessor :plugin_paths
     attr_accessor :pipeline
-    
+
     # _paths_ :: Directory paths which contain legacy plugins.
     # _pipeline_ :: Runtime pipline.
     def initialize paths, pipeline
@@ -17,15 +17,15 @@ module Yapra::LegacyPlugin
       self.plugin_paths = paths.reverse
       self.pipeline = pipeline
     end
-    
+
     def logger
       Yapra::Runtime.logger
     end
-    
+
     # load plugin from module name.
-    # 
+    #
     # example:
-    # 
+    #
     #     registry = Yapra::LegacyPlugin::AdvanceModeRegistry.new(paths, pipeline)
     #     feed_load_plugin = registry.get('Feed::load')
     #

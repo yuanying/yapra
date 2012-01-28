@@ -1,8 +1,8 @@
 ## Read data and convert to feed -- IKeJI
 ##
 ## Read data and convert to feed.
-## 
-## Example 
+##
+## Example
 ## - module: Feed::custom_feed
 ##   config:
 ##     url: addr of data -- optional
@@ -11,7 +11,7 @@
 ##     title: regex for title
 ##     date: regex for date
 ##     link: regex for link
-##     
+##
 
 require 'open-uri'
 require 'kconv'
@@ -28,7 +28,7 @@ def custom_feed(config,data)
     else
       body = input
     end
-    
+
     if(config['split'])
       body.gsub(Regexp.new(config['split'],Regexp::MULTILINE)) do
         items.push $1
@@ -37,13 +37,13 @@ def custom_feed(config,data)
       items.push body
     end
   end
-  
+
   if(config['title'])
     title = Regexp.new(config['title'])
     items.each do|i|
       if i =~ title
         mytitle = $1
-        i.instance_eval do 
+        i.instance_eval do
           @title = mytitle
           def title
             @title
@@ -72,7 +72,7 @@ def custom_feed(config,data)
     link = Regexp.new(config['link'])
     items.each do|i|
       if i =~ link
-        mylink = config['url'] ? (config['url'] + '#' + $1) : $1 
+        mylink = config['url'] ? (config['url'] + '#' + $1) : $1
         i.instance_eval do
           @link = mylink
           def link
@@ -82,6 +82,6 @@ def custom_feed(config,data)
       end
     end
   end
-  
+
   return items
 end

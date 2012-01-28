@@ -14,7 +14,7 @@ require 'cgi'
 def nicovideo(config,data)
   auth = YAML.load( File.read( config['authfile'] ) )
   agent = defined?(Mechanize) ? Mechanize.new : WWW::Mechanize.new
-  
+
   page = agent.post("https://secure.nicovideo.jp/secure/login?site=niconico",
       {"mail"=>auth["mail"],"password"=>auth["password"]})
   sleep 3
@@ -37,7 +37,7 @@ def nicovideo(config,data)
       File.open("#{config['dir']}/list.html","a")do |w|
         w.puts "<h3><a href='#{id}.flv'>#{dat.title}</a></h3><p><a href='#{dat.link}'>#{dat.description}</a>"
       end
-    rescue 
+    rescue
       STDERR.puts "an error occurred in downloadng FLV #{id}"
     end
     sleep 3

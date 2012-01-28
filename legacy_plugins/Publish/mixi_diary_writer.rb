@@ -1,13 +1,13 @@
 ## author "emergent"
 ## descr  "post feed(s) to mixi diary"
-## 
+##
 ## example <<EOE
-## when posting one diary per one feed 
+## when posting one diary per one feed
 ## - module: publish::mixi_diary_writer
 ##   config:
 ##     username: test@test.com
 ##     password: ********
-## 
+##
 ## when posting merged feeds to one diary
 ## - module: publish::mixi_diary_writer
 ##   config:
@@ -41,7 +41,7 @@ class MixiDiaryWriter
       @username = username
       @password = password
     end
-    @agent.post('http://mixi.jp/login.pl', 
+    @agent.post('http://mixi.jp/login.pl',
                 { 'email' => @username,
                   'password' => @password,
                   'next_url' => '/home.pl' })
@@ -60,7 +60,7 @@ class MixiDiaryWriter
       edit_form['diary_title'] = title.toeuc
       edit_form['diary_body'] = content.toeuc
       confirm_page = @agent.submit(edit_form)
-    
+
       conf_form = confirm_page.forms[0] # select 'hai'
       @agent.submit(conf_form)
     rescue => e

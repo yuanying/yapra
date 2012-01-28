@@ -5,7 +5,7 @@
 ## - module: filter::invert
 ##   config:
 ##     - module: grep
-##       config: 
+##       config:
 ##         regex: "理系の人々"
 ##
 

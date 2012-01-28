@@ -2,11 +2,11 @@ require 'yapra/plugin/mechanize_base'
 
 module Yapra::Plugin::Publish
   # = Publish::OnMemoryDownload -- Yuanying
-  # 
+  #
   # download web resource and set to item attribute.
-  # 
-  # example: 
-  # 
+  #
+  # example:
+  #
   #     - module: Publish::OnMemoryDownload
   #       config:
   #         regexp: http://www\.yahoo\.co\.jp/*
@@ -29,7 +29,7 @@ module Yapra::Plugin::Publish
       else
         regexp = /^(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)$/
       end
-      
+
       wait = config['wait'] || 3
 
       data.each do |item|
@@ -42,10 +42,10 @@ module Yapra::Plugin::Publish
           sleep wait
         end
       end
-      
+
       data
     end
-    
+
     protected
     def construct_data(config, item, original=nil)
       if config && config['attribute']
@@ -62,22 +62,22 @@ module Yapra::Plugin::Publish
 
       original
     end
-    
+
     def save config, item, page
       set_attribute_to item, config['attribute'], page
     end
-    
+
     def download(item, url, referrer)
       if config['before_hook']
         eval(config['before_hook'])
       end
-      
+
       dir = config['dir']
-      
+
       page = agent.get(url, referrer)
-      
+
       save(config, item, page)
-      
+
       if config['after_hook']
         eval(config['after_hook'])
       end

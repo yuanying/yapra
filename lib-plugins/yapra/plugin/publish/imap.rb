@@ -3,11 +3,11 @@ require 'yapra/plugin/publish/mail'
 
 module Yapra::Plugin::Publish
   # = module: Publish::Imap -- Yuanying
-  # 
+  #
   # publish entry to imap mail.
-  # 
+  #
   # example:
-  # 
+  #
   #     - module: Publish::Imap
   #       config:
   #         username: username

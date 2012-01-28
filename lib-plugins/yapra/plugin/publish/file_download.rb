@@ -2,11 +2,11 @@ require 'yapra/plugin/publish/on_memory_download'
 
 module Yapra::Plugin::Publish
   # = Publish::FileDownload -- Yuanying
-  # 
+  #
   # download file with WWW::Mechanize.
-  # 
-  # example: 
-  # 
+  #
+  # example:
+  #
   #     - module: Publish::FileDownload
   #       config:
   #         regexp: http://www\.yahoo\.co\.jp/*
@@ -27,7 +27,7 @@ module Yapra::Plugin::Publish
   #           to: 'html'
   #
   class FileDownload < Yapra::Plugin::Publish::OnMemoryDownload
-    
+
     protected
     def discover_extensions page
       require 'mime/types'
@@ -41,11 +41,11 @@ module Yapra::Plugin::Publish
     rescue LoadError => ex
       logger.warn 'require mime-types is failed.'
     end
-    
+
     def save config, item, page
       filename = construct_data(config['filename'], item)
       filename = page.filename unless filename
-      
+
       if config['auto_suffix']
         ext = discover_extensions(page)
         filename = "#{filename}.#{ext}" if ext

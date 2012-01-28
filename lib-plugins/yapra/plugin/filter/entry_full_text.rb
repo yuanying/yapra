@@ -2,9 +2,9 @@ require 'yapra/plugin/mechanize_base'
 
 module Yapra::Plugin::Filter
   # Filter::EntryFullText -- Yuanying
-  # 
+  #
   # get the entry full text from page with WWW::Mechanize.
-  # 
+  #
   #     - module: Filter::EntryFullText
   #       config:
   #         regexp: http://www\.pixiv\.net/*
@@ -15,7 +15,7 @@ module Yapra::Plugin::Filter
   #           description: "//div[@id='content2']"
   #         apply_template_after_extracted:
   #           content_encoded: '<div><%= title %></div>'
-  
+
   class EntryFullText < Yapra::Plugin::MechanizeBase
     def run(data)
       regexp = nil
@@ -24,9 +24,9 @@ module Yapra::Plugin::Filter
       else
         regexp = /^(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)$/
       end
-      
+
       wait = config['wait'] || 1
-      
+
       data.map! do |item|
         url = item
         if item.respond_to?('link')
@@ -52,7 +52,7 @@ module Yapra::Plugin::Filter
         end
         item
       end
-      
+
       data
     end
   end
