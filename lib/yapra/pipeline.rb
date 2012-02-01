@@ -70,7 +70,7 @@ class Yapra::Pipeline < Yapra::PipelineBase
   
   def run_class_based_plugin command, data
     self.logger.debug("evaluate plugin as class based")
-    plugin = load(command['module'])
+    plugin = load(command)
     
     # yml pipeline specific.
     plugin.plugin_config  = command['config'] if plugin.respond_to?('plugin_config=')
