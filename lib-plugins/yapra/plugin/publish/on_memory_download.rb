@@ -72,8 +72,6 @@ module Yapra::Plugin::Publish
         eval(config['before_hook'])
       end
       
-      dir = config['dir']
-      
       page = agent.get(url, [], referrer)
       
       save(config, item, page)
