@@ -63,7 +63,7 @@ module Yapra::Plugin::Publish
       original
     end
     
-    def save config, item, page
+    def save(config, item, page)
       set_attribute_to item, config['attribute'], page
     end
     
@@ -74,7 +74,7 @@ module Yapra::Plugin::Publish
       
       dir = config['dir']
       
-      page = agent.get(url, referrer)
+      page = agent.get(url, [], referrer)
       
       save(config, item, page)
       
