@@ -1,3 +1,19 @@
+== 0.2.1
+
+* 1 bug fix:
+  * Refferer fixed.
+  * Mail format bug is fixed.
+  * LoadError mechanizm is fixed.
+
+* 2 majar enhancement:
+
+== 0.2.0
+
+* 1 bug fix:
+
+* 2 majar enhancement:
+  * Ruby 1.9.2 is supported.
+
 == 0.1.3
 
 * 1 bug fix:
