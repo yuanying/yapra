@@ -93,7 +93,6 @@ Content-type: text/html; charset=UTF-8
 Content-transfer-encoding: base64
 
 <%=content %>
-
 --<%=boundary %>
 <% attachments.each do |file| -%>
 Content-Type: <%=file.header['Content-Type'] %>;
@@ -103,9 +102,7 @@ Content-Disposition: attachment;
 Content-Transfer-Encoding: base64
 
 <%=[file.body].pack('m') -%>
-
 --<%=boundary %>
-
 <% end -%>
 EOT
     end

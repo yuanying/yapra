@@ -43,9 +43,11 @@ module Yapra::Plugin::Publish
     end
     
     def save config, item, page
+      dir = config['dir']
+
       filename = construct_data(config['filename'], item)
       filename = page.filename unless filename
-      
+
       if config['auto_suffix']
         ext = discover_extensions(page)
         filename = "#{filename}.#{ext}" if ext
