@@ -1,9 +1,9 @@
 begin
-  require 'spec'
+  require 'rspec'
 rescue LoadError
   require 'rubygems'
   gem 'rspec'
-  require 'spec'
+  require 'rspec'
 end
 
 $fixture_dir = File.join(File.dirname(__FILE__), '..', 'fixtures') unless $fixture_dir

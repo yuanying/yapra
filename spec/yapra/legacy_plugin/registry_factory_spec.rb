@@ -4,7 +4,7 @@ require 'yapra/legacy_plugin/registry_factory'
 
 describe Yapra::LegacyPlugin::RegistryFactory do
   before do
-    @pipeline = mock('pipeline', :null_object => true)
+    @pipeline = double('pipeline').as_null_object
   end
   
   it 'should create advance mode registry from string "advance"' do

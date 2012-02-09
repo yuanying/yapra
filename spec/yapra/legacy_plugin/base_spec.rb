@@ -5,7 +5,7 @@ require 'yapra/legacy_plugin/base'
 describe Yapra::LegacyPlugin::Base do
   
   before do
-    @pipeline = mock('pipeline', :null_object => true)
+    @pipeline = double('pipeline').as_null_object
   end
   
   describe 'which is initialized by "fixtures/legacy_test_plugin.rb"' do
