@@ -22,7 +22,8 @@ class Yapra::PipelineBase
     return @logger || Yapra::Runtime.logger
   end
   
-  def load plugin_name
+  def load command
+    plugin_name = command['module']
     load_error_stack = []
     plugin_class = nil
     @module_name_prefix.each do |prefix|
